@@ -1,0 +1,98 @@
+@import (less) "../../node_modules/normalize.css/normalize.css";
+@import (less) "components/fonticon.css";
+//@import "components/_mixins";
+//@import "components/_variables";
+
+// Default Settings
+@-ms-viewport {
+	width: device-width;
+}
+
+* {
+	box-sizing: border-box;
+	-webkit-font-smoothing: antialiased;
+	        font-smoothing: antialiased;
+	margin: 0;
+	padding: 0;
+	//.disableSelection();
+}
+
+html, body {
+	height: 100%;
+	position: relative;
+}
+
+html.lt-ie9 {
+	max-width: 768px;
+	margin: 0 auto;
+	position: relative;
+}
+
+a {
+	//color: rgba(255, 255, 255, 1);
+	text-decoration: none;
+	&:hover, &:active, &:visited, &:link {
+		//color: rgba(255, 255, 255, 1);
+		text-decoration: none;
+	}
+}
+body {
+    position: relative;
+    font-size: 16px;
+}
+
+h1 { }
+h2 { }
+h3 {
+	text-transform: uppercase;
+	//font-family: @font1;
+	font-size: 20px;
+}
+h4 {
+	text-transform: uppercase;
+	//font-family: @font2;
+	font-size: 13px;
+}
+h5 {
+	//font-family: @font2;
+	font-size: 12px;
+}
+h6 { }
+ul {
+	list-style: none;
+}
+// End of Default Settings
+
+.bg {
+	background: url('../img/bg.jpg') no-repeat;
+	background-size: 100% 100%;
+	position: absolute;
+	height: 100vh;
+	width: 100vw;
+}
+
+.wrapper {
+	background: rgba(165, 156, 185, 0.80);
+	position: fixed;
+	height: 100vh;
+	width: 100vw;
+	left: 0px;
+	top: 0px;
+}
+
+.player {
+	float: left;
+	i { transform: rotate(90deg) }
+}
+
+.computer {
+	float: right;
+	i { transform: rotate(-90deg) }
+}
+
+.gamebuttons {
+	i {
+		font-size: 100px;
+		display: block;
+	}
+}

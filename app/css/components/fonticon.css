@@ -1,0 +1,38 @@
+@font-face {
+  font-family: "rps-iconfont";
+  src: url('../fonts/rps-iconfont.eot');
+  src: url('../fonts/rps-iconfont.eot?#iefix') format('eot'),
+    url('../fonts/rps-iconfont.woff') format('woff'),
+    url('../fonts/rps-iconfont.ttf') format('truetype'),
+    url('../fonts/rps-iconfont.svg#rps-iconfont') format('svg');
+  font-weight: normal;
+  font-style: normal;
+}
+
+.icon:before {
+  display: inline-block;
+  font-family: "rps-iconfont";
+  font-style: normal;
+  font-weight: normal;
+  line-height: 1;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.icon-lg {
+  font-size: 1.3333333333333333em;
+  line-height: 0.75em;
+  vertical-align: -15%;
+}
+.icon-2x { font-size: 2em; }
+.icon-3x { font-size: 3em; }
+.icon-4x { font-size: 4em; }
+.icon-5x { font-size: 5em; }
+.icon-fw {
+  width: 1.2857142857142858em;
+  text-align: center;
+}
+
+.icon-paper:before { content: "\EA01" }
+.icon-rock:before { content: "\EA02" }
+.icon-scissor:before { content: "\EA03" }
