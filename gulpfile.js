@@ -1,21 +1,40 @@
 var gulp 		= require('gulp');
+// Gulp Plugin
 var less 		= require('gulp-less');
+var plumber		= require('gulp-plumber');
 var iconfont	= require('gulp-iconfont');
 var consolidate = require('gulp-consolidate');
+// Node Modules
+var babelify 	= require('babelify');
+var browserify  = require('browserify');
+var source		= require('vinyl-source-stream');
 var browserSync = require('browser-sync').create();
-
+// Compile Less Files
 gulp.task('less', function() {
 	gulp.src('./app/css/*.less')
+		.pipe(plumber())
 		.pipe(less())
 		.pipe(gulp.dest('./app/css'));
 });
+// Compile ES6 Files
+gulp.task("js", function () {
+    var b = browserify({entries:"./app/js/main.js"});
 
+    return b.bundle()
+        .on('error', function (err) {
+            console.log(err.toString());
+            this.emit("end");
+        })
+        .pipe(source("app.js"))
+        .pipe(gulp.dest('./app/js'));
+});
+// Serve the Server
 gulp.task('serve', function() {
     browserSync.init({
         server: './app/'
     });
 });
-
+// Convert .svg to Icon Font
 gulp.task('iconfont', function() {
 	gulp.src(['./app/icons/*.svg'])
 		.pipe(iconfont({
@@ -39,10 +58,10 @@ gulp.task('iconfont', function() {
 		})
 		.pipe(gulp.dest('./app/fonts/'));
 });
-
+// Watch for Changes
 gulp.task('watch', ['serve'], function() {
     gulp.watch('./app/**/*.less', ['less']).on('change', browserSync.reload);
     gulp.watch('./app/**/*.html').on('change', browserSync.reload);
     gulp.watch('./app/**/*.css').on('change', browserSync.reload);
-    gulp.watch('./app/**/*.js').on('change', browserSync.reload);
+    gulp.watch('./app/**/*.js', ['js']).on('change', browserSync.reload);
 });
