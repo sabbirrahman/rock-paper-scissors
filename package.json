@@ -37,6 +37,7 @@
     ]
   },
   "dependencies": {
+    "make-routes": "^1.1.2",
     "normalize.css": "^3.0.3"
   },
   "devDependencies": {
