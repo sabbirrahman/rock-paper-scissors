@@ -1,7 +1,8 @@
 @import (less) "../../node_modules/normalize.css/normalize.css";
 @import (less) "components/fonticon.css";
+@import "components/fonts";
+@import "components/variables";
 //@import "components/_mixins";
-//@import "components/_variables";
 
 // Default Settings
 @-ms-viewport {
@@ -14,10 +15,11 @@
 	        font-smoothing: antialiased;
 	margin: 0;
 	padding: 0;
+	font-family: @font;
 	//.disableSelection();
 }
 
-html, body {
+html {
 	height: 100%;
 	position: relative;
 }
@@ -63,6 +65,75 @@ ul {
 }
 // End of Default Settings
 
+.view {
+	display: none;
+}
+
+// Splash Screen
+.splash {
+	img {
+		display: block;
+		margin: 0px auto;
+		margin-top: ~'calc((100vh - 480px)/2)';
+	}
+}
+
+
+// Menu
+.menu {
+	.wrapper {
+		display: table;
+		overflow: hidden;
+		ul {
+			display: table-cell;
+			vertical-align: middle;
+			text-align: center;
+		}
+	}
+}
+
+.btn {
+	text-shadow: 0px 1px 0px #FFFFFF;
+	display: inline-block;
+	border-radius: 15px;
+	padding: 5px 0px;
+	margin: 15px 0px;
+	font-size: 42px;
+	width: 200px;
+}
+.btn.yellow {
+	box-shadow: 
+		0px -5px  0px #FFFF56,
+		0px -7px  0px #FFFFFF,
+		0px 10px  0px #AA3150,
+		0px 13px 10px 2px rgba(0, 0, 0, 0.3);
+	background: #FFD939;
+	color: #AB002C;
+	&:hover {
+		box-shadow: 
+			0px -5px  0px #FFFF56,
+			0px -7px  0px #FFFFFF,
+			0px 10px  0px #AA3150;
+	}
+}
+.btn.blue {
+	box-shadow: 
+		0px -5px  0px #26FFFF,
+		0px -7px  0px #FFFFFF,
+		0px 10px  0px #6C37BC,
+		0px 13px 10px 2px rgba(0, 0, 0, 0.3);
+	background: #18D3E5;
+	color: #432D63;
+	&:hover {
+		box-shadow: 
+			0px -5px  0px #26FFFF,
+			0px -7px  0px #FFFFFF,
+			0px 10px  0px #6C37BC;
+	}
+}
+
+
+// Gameplay Screen
 .bg {
 	background: url('../img/bg.jpg') no-repeat;
 	background-size: 100% 100%;
@@ -72,7 +143,7 @@ ul {
 }
 
 .wrapper {
-	background: rgba(165, 156, 185, 0.80);
+	background: rgba(81, 142, 160, 0.75);
 	position: fixed;
 	height: 100vh;
 	width: 100vw;

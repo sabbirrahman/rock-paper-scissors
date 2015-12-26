@@ -1,7 +1,7 @@
 {
-  "name": "rock-scissors-paper",
+  "name": "rock-paper-scissors",
   "version": "0.0.1",
-  "description": "Class rock scissors paper game. :3",
+  "description": "Class rock paper scissors game.",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
@@ -37,8 +37,9 @@
     ]
   },
   "dependencies": {
-    "make-routes": "^1.1.2",
-    "normalize.css": "^3.0.3"
+    "jquery": "^2.1.4",
+    "normalize.css": "^3.0.3",
+    "page.js": "^4.13.3"
   },
   "devDependencies": {
     "babel-preset-es2015": "^6.3.13",

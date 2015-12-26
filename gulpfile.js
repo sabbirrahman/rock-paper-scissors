@@ -60,8 +60,8 @@ gulp.task('iconfont', function() {
 });
 // Watch for Changes
 gulp.task('watch', ['serve'], function() {
-    gulp.watch('./app/**/*.less', ['less']).on('change', browserSync.reload);
-    gulp.watch('./app/**/*.html').on('change', browserSync.reload);
-    gulp.watch('./app/**/*.css').on('change', browserSync.reload);
-    gulp.watch('./app/**/*.js', ['js']).on('change', browserSync.reload);
+    gulp.watch('./app/index.html').on('change', browserSync.reload);
+    gulp.watch('./app/css/**/*.less', ['less']).on('change', browserSync.reload);
+    gulp.watch('./app/css/**/*.css').on('change', browserSync.reload);
+    gulp.watch('./app/js/**/*.js', ['js']).on('change', browserSync.reload);
 });
