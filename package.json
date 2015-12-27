@@ -37,6 +37,7 @@
     ]
   },
   "dependencies": {
+    "animate.css": "^3.4.0",
     "jquery": "^2.1.4",
     "normalize.css": "^3.0.3",
     "page.js": "^4.13.3"
@@ -47,6 +48,7 @@
     "browser-sync": "^2.10.1",
     "browserify": "^12.0.1",
     "gulp": "^3.9.0",
+    "gulp-autoprefixer": "^3.1.0",
     "gulp-consolidate": "^0.1.2",
     "gulp-iconfont": "^5.0.1",
     "gulp-less": "^3.0.5",

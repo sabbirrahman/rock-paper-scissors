@@ -1,19 +1,21 @@
-var gulp 		= require('gulp');
+var gulp 		 = require('gulp');
 // Gulp Plugin
-var less 		= require('gulp-less');
-var plumber		= require('gulp-plumber');
-var iconfont	= require('gulp-iconfont');
-var consolidate = require('gulp-consolidate');
+var less 		 = require('gulp-less');
+var plumber		 = require('gulp-plumber');
+var iconfont	 = require('gulp-iconfont');
+var consolidate  = require('gulp-consolidate');
+var autoprefixer = require('gulp-autoprefixer');
 // Node Modules
-var babelify 	= require('babelify');
-var browserify  = require('browserify');
-var source		= require('vinyl-source-stream');
-var browserSync = require('browser-sync').create();
+var babelify 	 = require('babelify');
+var browserify   = require('browserify');
+var source		 = require('vinyl-source-stream');
+var browserSync  = require('browser-sync').create();
 // Compile Less Files
 gulp.task('less', function() {
 	gulp.src('./app/css/*.less')
 		.pipe(plumber())
 		.pipe(less())
+		.pipe(autoprefixer({ browsers: ['last 2 versions']}))
 		.pipe(gulp.dest('./app/css'));
 });
 // Compile ES6 Files

@@ -12,7 +12,7 @@ let loadView = function(view) {
 }
 
 Route('/'	 , () => {
-	loadView('menu');
+	loadView('game');
 	//setTimeout(() => Route('/menu'), 3000);
 });
 Route('/menu', loadView);

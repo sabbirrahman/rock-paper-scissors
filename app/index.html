@@ -26,37 +26,65 @@
         <div class="view menu" id="menu">
             <!-- <div class="bg"></div> -->
             <div class="wrapper">
-                <ul>
-                    <a class="btn yellow" href="/game"><li><span class="text">Play!</span></li></a><br>
-                    <a class="btn blue" href="#"><li><span class="text">Settings</span></li></a>
-                </ul>
+                <div class="content">
+                    <ul>
+                        <a class="btn yellow hover" href="/game"><li><span class="text">Play!</span></li></a><br>
+                        <a class="btn blue hover" href="#"><li><span class="text">Settings</span></li></a>
+                    </ul>
+                </div>
             </div>
         </div>
 
         <!-- Gameplay View -->
-        <div class="view" id="game">
+        <div class="view game" id="game">
             <div class="bg"></div>
             <div class="wrapper">
-                <header>
-                    <h1>Score</h1>
-                </header>
-                <main id="game">
-                    <div class="player">
-                        <ul class="gamebuttons">
-                            <li><i class="icon icon-rock icon-4x"></i></li>
-                            <li><i class="icon icon-paper icon-4x"></i></li>
-                            <li><i class="icon icon-scissor icon-4x"></i></li>
-                        </ul>
+                <div class="content">
+                    <header>
+                        <div class="scorebox">
+                            <span class="player-score">0</span>
+                            <span class="gap">-</span>
+                            <h1>Score</h1>
+                            <span class="gap">-</span>
+                            <span class="computer-score">0</span>
+                        </div>
+                    </header>
+                    <main id="game">
+                        <div class="player">
+                            <ul class="gamebuttons">
+                                <li class="btn yellow hover"><i class="icon icon-rock" data-player="rock"></i></li>
+                                <li class="btn blue hover"><i class="icon icon-paper" data-player="paper"></i></li>
+                                <li class="btn green hover"><i class="icon icon-scissors" data-player="scissors"></i></li>
+                            </ul>
+                        </div>
+                        <div class="center">
+                            <div class="win-msg"></div>
+                            <ul>
+                                <li class="player-choice btn yellow"><i class="icon icon-rock"></i></li>
+                                <li class="computer-choice btn blue"><i class="icon icon-paper"></i></li>
+                            </ul>
+                        </div>
+                        <div class="computer">
+                            <ul class="gamebuttons">
+                                <li class="btn yellow"><i class="icon icon-rock"></i></li>
+                                <li class="btn blue"><i class="icon icon-paper"></i></li>
+                                <li class="btn green"><i class="icon icon-scissors"></i></li>
+                            </ul>
+                        </div>
+                    </main>
+                    <footer>
+                        <a class="btn yellow hover" href="/menu">Goto Menu!</a>
+                    </footer>
+                    <div class="gameover-overlay">
+                        <div class="gameover-dialog">
+                            <div class="gameover-msg"></div>
+                            <div class="gameover-buttons">
+                                <a href="/game" class="btn blue">Play Again!</a>
+                                <a href="/menu" class="btn green">Goto Menu!</a>
+                            </div>
+                        </div>
                     </div>
-                    <div class="computer">
-                        <ul class="gamebuttons">
-                            <li><i class="icon icon-rock icon-4x"></i></li>
-                            <li><i class="icon icon-paper icon-4x"></i></li>
-                            <li><i class="icon icon-scissor icon-4x"></i></li>
-                        </ul>
-                    </div>
-                    <a href="/menu">Goto Menu</a>
-                </main>
+                </div>
             </div>
         </div>
         <script src="js/app.js"></script>

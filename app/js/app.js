@@ -19,7 +19,7 @@ var loadView = function loadView(view) {
 };
 
 (0, _page2.default)('/', function () {
-	loadView('menu');
+	loadView('game');
 	//setTimeout(() => Route('/menu'), 3000);
 });
 (0, _page2.default)('/menu', loadView);
@@ -27,7 +27,127 @@ var loadView = function loadView(view) {
 
 (0, _page2.default)();
 
-},{"page.js":5}],2:[function(require,module,exports){
+},{"page.js":8}],2:[function(require,module,exports){
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+	value: true
+});
+exports.Animation = undefined;
+
+var _Elements = require("./Elements");
+
+var Animation = exports.Animation = {
+	tieAnimation: function tieAnimation() {
+		_Elements.Elem.msgEl.innerHTML = "Tie! :/";
+		_Elements.Elem.msgEl.style.display = "block";
+		_Elements.Elem.msgEl.classList.add('shake');
+		setTimeout(function () {
+			_Elements.Elem.msgEl.style.display = "none";
+			_Elements.Elem.msgEl.classList.remove('shake');
+		}, 1000);
+	},
+	winAnimation: function winAnimation() {
+		_Elements.Elem.msgEl.innerHTML = "You Won! :D";
+		_Elements.Elem.msgEl.style.display = "block";
+		_Elements.Elem.msgEl.classList.add('flash');
+		setTimeout(function () {
+			_Elements.Elem.msgEl.style.display = "none";
+			_Elements.Elem.msgEl.classList.remove('flash');
+		}, 1000);
+		_Elements.Elem.playerScoreEl.innerHTML = ++_Elements.Elem.playerScoreEl.innerHTML;
+	},
+	loseAnimation: function loseAnimation() {
+		_Elements.Elem.msgEl.innerHTML = "You Lose! :(";
+		_Elements.Elem.msgEl.style.display = "block";
+		_Elements.Elem.msgEl.classList.add('swing');
+		setTimeout(function () {
+			_Elements.Elem.msgEl.style.display = "none";
+			_Elements.Elem.msgEl.classList.remove('swing');
+		}, 1000);
+		_Elements.Elem.computerScoreEl.innerHTML = ++_Elements.Elem.computerScoreEl.innerHTML;
+	},
+	playerMoveAnimation: function playerMoveAnimation() {
+		_Elements.Elem.playerChoiceEl.classList.add('bounceInLeft');
+		_Elements.Elem.playerChoiceEl.style.display = 'inline-block';
+		setTimeout(function () {
+			_Elements.Elem.playerChoiceEl.style.display = 'none';
+			_Elements.Elem.playerChoiceEl.classList.remove('bounceInLeft');
+		}, 2500);
+	},
+	computerMoveAnimation: function computerMoveAnimation() {
+		_Elements.Elem.computerChoiceEl.classList.add('bounceInRight');
+		_Elements.Elem.computerChoiceEl.style.display = 'inline-block';
+		setTimeout(function () {
+			_Elements.Elem.computerChoiceEl.style.display = 'none';
+			_Elements.Elem.computerChoiceEl.classList.remove('bounceInRight');
+		}, 2000);
+	},
+	gameoverAnimation: function gameoverAnimation(msg) {
+		_Elements.Elem.gameoverMsg = gameoverMsg.innerHTML = msg;
+		_Elements.Elem.gameoverOverlay.classList.add('fadeIn');
+		_Elements.Elem.gameoverOverlay.style.display = 'table-cell';
+		_Elements.Elem.gameoverDialog.classList.add('zoomIn');
+		_Elements.Elem.gameoverDialog.style.display = 'block';
+	}
+};
+
+},{"./Elements":3}],3:[function(require,module,exports){
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+	value: true
+});
+var Elem = exports.Elem = {
+	playerScoreEl: document.getElementsByClassName('player-score')[0],
+	computerScoreEl: document.getElementsByClassName('computer-score')[0],
+	msgEl: document.getElementsByClassName('win-msg')[0],
+	playerChoiceEl: document.getElementsByClassName('player-choice')[0],
+	computerChoiceEl: document.getElementsByClassName('computer-choice')[0],
+	gameoverOverlay: document.getElementsByClassName('gameover-overlay')[0],
+	gameoverDialog: document.getElementsByClassName('gameover-dialog')[0],
+	gameoverMsg: document.getElementsByClassName('gameover-msg')[0]
+};
+
+},{}],4:[function(require,module,exports){
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+	value: true
+});
+var GameLogic = exports.GameLogic = {
+	playerScore: 0,
+	computerScore: 0,
+	getComputerChoice: function getComputerChoice() {
+		var computerChoice = Math.random();
+
+		return computerChoice < 0.34 ? 'rock' : computerChoice < 0.65 ? 'paper' : 'scissors';
+	},
+
+	isTie: function isTie(player, computer) {
+		return player === computer ? 1 : 0;
+	},
+
+	playerWon: function playerWon(player, computer) {
+		if (player === 'rock') {
+			return computer === 'scissors' ? 1 : -1;
+		} else if (player === 'scissors') {
+			return computer === 'paper' ? 1 : -1;
+		} else if (player === 'paper') {
+			return computer === 'rock' ? 1 : -1;
+		}
+	},
+
+	isGameOver: function isGameOver() {
+		return this.playerScore === 15 || this.computerScore === 15;
+	},
+
+	playerWonGame: function playerWonGame() {
+		return this.playerScore === 15;
+	}
+};
+
+},{}],5:[function(require,module,exports){
 "use strict";
 
 var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
@@ -81,14 +201,52 @@ var StorageService = (function () {
 
 var Storage = exports.Storage = new StorageService();
 
-},{}],3:[function(require,module,exports){
+},{}],6:[function(require,module,exports){
 'use strict';
+
+var _GameLogic = require('./Services/GameLogic');
+
+var _Animation = require('./Services/Animation');
 
 var _Storage = require('./Services/Storage');
 
 var _Routes = require('./Routes');
 
-},{"./Routes":1,"./Services/Storage":2}],4:[function(require,module,exports){
+var actionButtons = document.querySelectorAll('.player .gamebuttons li');
+
+[].forEach.call(actionButtons, function (actionButton) {
+	actionButton.addEventListener('click', function (e) {
+		var player = e.target.dataset.player;
+		var computer = _GameLogic.GameLogic.getComputerChoice();
+
+		_Animation.Animation.playerMoveAnimation();
+		setTimeout(function () {
+			_Animation.Animation.computerMoveAnimation();
+		}, 500);
+
+		if (isGameOver()) {
+			if (_GameLogic.GameLogic.playerWonGame()) {
+				_Animation.Animation.gameoverAnimation("Yeee! You beat the evil computer! :D");
+			} else {
+				_Animation.Animation.gameoverAnimation("Nooo! You have been beaten by the evil computer! :(");
+			}
+		} else {
+			setTimeout(function () {
+				if (_GameLogic.GameLogic.isTie(player, computer)) {
+					_Animation.Animation.tieAnimation();
+				} else if (_GameLogic.GameLogic.playerWon(player, computer)) {
+					_GameLogic.GameLogic.playerScore++;
+					_Animation.Animation.winAnimation();
+				} else {
+					_GameLogic.GameLogic.computerScore++;
+					_Animation.Animation.loseAnimation();
+				}
+			}, 1500);
+		}
+	});
+});
+
+},{"./Routes":1,"./Services/Animation":2,"./Services/GameLogic":4,"./Services/Storage":5}],7:[function(require,module,exports){
 // shim for using process in browser
 
 var process = module.exports = {};
@@ -181,7 +339,7 @@ process.chdir = function (dir) {
 };
 process.umask = function() { return 0; };
 
-},{}],5:[function(require,module,exports){
+},{}],8:[function(require,module,exports){
 (function (process){
   /* globals require, module */
 
@@ -807,7 +965,7 @@ process.umask = function() { return 0; };
   page.sameOrigin = sameOrigin;
 
 }).call(this,require('_process'))
-},{"_process":4,"path-to-regexp":6}],6:[function(require,module,exports){
+},{"_process":7,"path-to-regexp":9}],9:[function(require,module,exports){
 /**
  * Expose `pathtoRegexp`.
  */
@@ -938,4 +1096,4 @@ function pathtoRegexp(path, keys, options) {
   return new RegExp(path, flags);
 };
 
-},{}]},{},[3]);
+},{}]},{},[6]);

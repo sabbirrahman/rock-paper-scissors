@@ -1,4 +1,5 @@
 @import (less) "../../node_modules/normalize.css/normalize.css";
+@import (less) "../../node_modules/animate.css/animate.css";
 @import (less) "components/fonticon.css";
 @import "components/fonts";
 @import "components/variables";
@@ -13,8 +14,8 @@
 	box-sizing: border-box;
 	-webkit-font-smoothing: antialiased;
 	        font-smoothing: antialiased;
-	margin: 0;
-	padding: 0;
+	margin: 0px;
+	padding: 0px;
 	font-family: @font;
 	//.disableSelection();
 }
@@ -42,32 +43,28 @@ body {
     position: relative;
     font-size: 16px;
 }
-
-h1 { }
-h2 { }
-h3 {
-	text-transform: uppercase;
-	//font-family: @font1;
-	font-size: 20px;
-}
-h4 {
-	text-transform: uppercase;
-	//font-family: @font2;
-	font-size: 13px;
-}
-h5 {
-	//font-family: @font2;
-	font-size: 12px;
-}
-h6 { }
-ul {
-	list-style: none;
+.hover {
+	cursor: pointer;
 }
 // End of Default Settings
-
 .view {
 	display: none;
 }
+.wrapper {
+	background: rgba(81, 142, 160, 0.75);
+	vertical-align: middle;
+	position: fixed;
+	display: table;
+	height: 100vh;
+	width: 100vw;
+	left: 0px;
+	top: 0px;
+	.content {
+		display: table-cell;
+		vertical-align: middle;
+	}
+}
+
 
 // Splash Screen
 .splash {
@@ -81,17 +78,173 @@ ul {
 
 // Menu
 .menu {
-	.wrapper {
-		display: table;
-		overflow: hidden;
-		ul {
-			display: table-cell;
-			vertical-align: middle;
+	ul {
+		list-style: none;
+		text-align: center;
+	}
+}
+
+
+// Gameplay Screen
+.game {
+	.bg {
+		background: url('../img/bg.jpg') no-repeat;
+		background-size: 100% 100%;
+		position: absolute;
+		height: 100vh;
+		width: 100vw;
+	}
+
+	header {
+		text-align: center;
+		position: fixed;
+		width: 100%;
+		left: 0;
+		top: 0;
+		.scorebox {
+			box-shadow: 0px 5px 0px #B71841,
+						0px 7px 2px 2px rgba(0, 0, 0, 0.3);
+			background: #ec4b74;
+			padding: 5px 10px;
+			margin: 0px auto;
+			width: 480px;
+			h1, span {
+  				-webkit-text-stroke: 1px #7B0A41;
+				font-size: 38px;
+				display: inline;
+				color: #F2F2F2;
+			}
+			.gap {
+				padding: 0px 10px;
+			}
+		}
+	}
+
+	main {
+		padding: 0px 30px;
+
+		.player, .computer, .center {
+			position: absolute;
 			text-align: center;
+			display: table;
+			height: 100vh;
+			ul {
+				display: table-cell;
+				vertical-align: middle;
+				li {
+					display: block;
+					width: 120px;
+					height: 120px;
+					text-align: center;
+					border-radius: 100%;
+					padding: 20px;
+					margin: 30px auto;
+					i {
+						font-size: 64px;
+						padding: 5px;
+						display: inline-block;
+					}
+				}
+			}
+		}
+
+		.player {
+			left: 30px;
+			top: 0;
+		}
+		
+		.computer {
+			right: 30px;
+			top: 0;
+			i { transform: scale(-1, 1); }
+		}
+
+		.center {
+			top: 0;
+			left: 0;
+			width: 100%;
+			z-index: -1;
+			ul {
+				li {
+					margin: 0px 10px;
+					display: none;
+					.animated();
+				}
+				li:last-child {
+					i { transform: scale(-1, 1); }
+				}
+			}
+			.win-msg {
+				text-shadow: 0px 1px 0px #FFFFFF;
+  				-webkit-text-stroke: 1px #000;
+				position: absolute;
+				text-align: center;
+				font-size: 38px;
+				display: none;
+				color: white;
+				width: 100%;
+				.animated();
+				top: 30vh;
+			}
+		}
+	}
+
+	footer {
+		position: absolute;
+		bottom: 30px;
+		width: 100vw;
+		.btn {
+			font-size: 28px;
+			display: block;
+			text-align: center;
+			margin: 0 auto;
+		}
+	}
+
+	.gameover-overlay {
+		background: rgba(0, 0, 0, 0.5);
+		vertical-align: middle;
+		display: table-cell;
+		position: relative;
+		z-index: 10000;
+		display: none;
+		height: 100vh;
+		width: 100vw;
+		.animated();
+		left: 0;
+		top: 0;
+		.gameover-dialog {
+			background: rgba(81, 142, 160, 0.75);
+			border-radius: 15px;
+			position: relative;
+			text-align: center;
+			margin: 0 auto;
+			padding: 20px;
+			height: 35vh;
+			.animated();
+			width: 40vw;
+			.gameover-buttons {
+				position: absolute;
+				bottom: 30px;
+				left: calc(20vw - 17.5px);
+				.btn {
+					width: 150px;
+					font-size: 32px;
+					margin: 0px 5px;
+				}
+			}
+			.gameover-msg {
+				text-shadow: 0px 1px 0px #FFFFFF;
+  				-webkit-text-stroke: 1px #000;
+  				color: white;
+				font-size: 40px;
+			}
 		}
 	}
 }
 
+
+// Util
 .btn {
 	text-shadow: 0px 1px 0px #FFFFFF;
 	display: inline-block;
@@ -101,69 +254,58 @@ ul {
 	font-size: 42px;
 	width: 200px;
 }
+
 .btn.yellow {
 	box-shadow: 
-		0px -5px  0px #FFFF56,
-		0px -7px  0px #FFFFFF,
-		0px 10px  0px #AA3150,
-		0px 13px 10px 2px rgba(0, 0, 0, 0.3);
+		0px -5px 0px #FFFF56,
+		0px -7px 0px #FFFFFF,
+		0px 10px 0px #AA3150,
+		0px 13px 2px 2px rgba(0, 0, 0, 0.3);
 	background: #FFD939;
 	color: #AB002C;
-	&:hover {
-		box-shadow: 
-			0px -5px  0px #FFFF56,
-			0px -7px  0px #FFFFFF,
-			0px 10px  0px #AA3150;
-	}
 }
+.btn.yellow.hover:hover {
+	.animated();
+	.tada();
+	box-shadow: 
+		0px -5px 0px #FFFF56,
+		0px -7px 0px #FFFFFF,
+		0px 10px 0px #AA3150;
+}
+
 .btn.blue {
 	box-shadow: 
-		0px -5px  0px #26FFFF,
-		0px -7px  0px #FFFFFF,
-		0px 10px  0px #6C37BC,
-		0px 13px 10px 2px rgba(0, 0, 0, 0.3);
+		0px -5px 0px #26FFFF,
+		0px -7px 0px #FFFFFF,
+		0px 10px 0px #6C37BC,
+		0px 13px 2px 2px rgba(0, 0, 0, 0.3);
 	background: #18D3E5;
 	color: #432D63;
-	&:hover {
-		box-shadow: 
-			0px -5px  0px #26FFFF,
-			0px -7px  0px #FFFFFF,
-			0px 10px  0px #6C37BC;
-	}
+}
+.btn.blue.hover:hover {	
+	.animated();
+	.tada();
+	box-shadow: 
+		0px -5px 0px #26FFFF,
+		0px -7px 0px #FFFFFF,
+		0px 10px 0px #6C37BC;
 }
 
+.btn.green {
+	box-shadow: 
+		0px -5px 0px #FFFF56,
+		0px -7px 0px #FFFFFF,
+		0px 10px 0px #256580,
+		0px 13px 2px 2px rgba(0, 0, 0, 0.3);
+	background: #A4E616;
+	color: #2D4E10;
 
-// Gameplay Screen
-.bg {
-	background: url('../img/bg.jpg') no-repeat;
-	background-size: 100% 100%;
-	position: absolute;
-	height: 100vh;
-	width: 100vw;
 }
-
-.wrapper {
-	background: rgba(81, 142, 160, 0.75);
-	position: fixed;
-	height: 100vh;
-	width: 100vw;
-	left: 0px;
-	top: 0px;
-}
-
-.player {
-	float: left;
-	i { transform: rotate(90deg) }
-}
-
-.computer {
-	float: right;
-	i { transform: rotate(-90deg) }
-}
-
-.gamebuttons {
-	i {
-		font-size: 100px;
-		display: block;
-	}
+.btn.green.hover:hover {
+	.animated();
+	.tada();
+	box-shadow: 
+		0px -5px 0px #FFFF56,
+		0px -7px 0px #FFFFFF,
+		0px 10px 0px #256580;
 }
