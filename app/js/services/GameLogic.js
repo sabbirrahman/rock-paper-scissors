@@ -1,6 +1,8 @@
+import {Elem} from "./Elements";
 export let GameLogic = {
 	playerScore : 0,
 	computerScore : 0,
+	gameOverAt: 10,
 	getComputerChoice: function() {
 		let computerChoice = Math.random();
 		
@@ -14,21 +16,29 @@ export let GameLogic = {
 
 	playerWon: function(player, computer){
 		if(player === 'rock') {
-			return computer === 'scissors' ? 1 : -1;
+			return computer === 'scissors' ? 1 : 0;
 		}
 		else if(player === 'scissors') {
-			return computer === 'paper' ? 1 : -1;
+			return computer === 'paper' ? 1 : 0;
 		}
 		else if(player === 'paper') {
-			return computer === 'rock' ? 1 : -1;
+			return computer === 'rock' ? 1 : 0;
 		}
 	},
 
 	isGameOver: function() {
-		return (this.playerScore === 15 || this.computerScore === 15)
+		return (this.playerScore === this.gameOverAt || this.computerScore === this.gameOverAt)
 	},
 
 	playerWonGame: function() {
-		return this.playerScore === 15;
+		return this.playerScore === this.gameOverAt;
+	},
+
+	resetGame: function() {
+		this.playerScore = 0;
+		this.computerScore = 0;
+		Elem.playerScoreEl.innerHTML = 0;
+		Elem.computerScoreEl.innerHTML = 0;
 	}
+
 }

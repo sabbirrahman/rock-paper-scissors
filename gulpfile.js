@@ -4,10 +4,16 @@ var less 		 = require('gulp-less');
 var plumber		 = require('gulp-plumber');
 var iconfont	 = require('gulp-iconfont');
 var consolidate  = require('gulp-consolidate');
-var autoprefixer = require('gulp-autoprefixer');
+//Less Plugins
+var LPCleanCSS   = require('less-plugin-clean-css');
+var LPAutoPrefix = require('less-plugin-autoprefix');
+var cleancss  	 = new LPCleanCSS({ advanced: true });
+var autoprefix   = new LPAutoPrefix({ browsers: ["last 5 versions"] });
 // Node Modules
-var babelify 	 = require('babelify');
+var del		 	 = require('del');
+var uglifyify	 = require('uglifyify');
 var browserify   = require('browserify');
+var runSequence  = require('run-sequence');
 var source		 = require('vinyl-source-stream');
 var browserSync  = require('browser-sync').create();
 // Compile Less Files
@@ -15,7 +21,6 @@ gulp.task('less', function() {
 	gulp.src('./app/css/*.less')
 		.pipe(plumber())
 		.pipe(less())
-		.pipe(autoprefixer({ browsers: ['last 2 versions']}))
 		.pipe(gulp.dest('./app/css'));
 });
 // Compile ES6 Files
@@ -66,4 +71,64 @@ gulp.task('watch', ['serve'], function() {
     gulp.watch('./app/css/**/*.less', ['less']).on('change', browserSync.reload);
     gulp.watch('./app/css/**/*.css').on('change', browserSync.reload);
     gulp.watch('./app/js/**/*.js', ['js']).on('change', browserSync.reload);
+});
+
+
+// Build Production
+gulp.task('build-clean', function() {
+	return del('./dist/**/*');
+});
+gulp.task('build-less', function() {
+	return gulp.src('./app/css/*.less')
+		.pipe(plumber())
+		.pipe(less({
+    		plugins: [autoprefix, cleancss]
+ 		}))
+		.pipe(gulp.dest('./dist/css'));
+});
+gulp.task("build-script", function () {
+    var b = browserify({entries:"./app/js/main.js"})
+    		.transform({
+  				global: true
+			}, 'uglifyify');
+
+    return b.bundle()
+        .on('error', function (err) {
+            console.log(err.toString());
+            this.emit("end");
+        })
+        .pipe(source("app.js"))
+        .pipe(gulp.dest('./dist/js'));
+});
+gulp.task('copy-fonts', function() {
+	return gulp.src('./app/fonts/*.{ttf,eot,svg,woff,woff2}')
+   		.pipe(gulp.dest('./dist/fonts'));
+});
+gulp.task('copy-img', function() {
+	return gulp.src('./app/img/*.{jpg,png}')
+   		.pipe(gulp.dest('./dist/img'));
+});
+gulp.task('copy-root', function() {
+	return gulp.src([
+		'./app/index.html',
+		'./app/favicon.ico'
+		])
+   		.pipe(gulp.dest('./dist'));
+});
+gulp.task('build', ['build-clean'], function(){
+	return runSequence([
+		'build-less',
+		'build-script',
+		'copy-img',
+		'copy-fonts',
+		'copy-root'
+	]);
+});
+// Serve the Build at http://localhost:8080
+gulp.task('serve-build', function() {
+	browserSync.init({
+        server: './dist/',
+        port: 8080,
+        ui: false
+    });
 });

@@ -3270,6 +3270,12 @@ Copyright (c) 2015 Daniel Eden
   margin: 0px;
   padding: 0px;
   font-family: "Dimbo-Regular";
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
 }
 html {
   height: 100%;
@@ -3299,6 +3305,14 @@ body {
 .view {
   display: none;
 }
+.bg {
+  background: url('../img/bg.jpg') no-repeat;
+  background-size: 100% 100%;
+  position: absolute;
+  height: 100vh;
+  width: 100vw;
+  z-index: -1;
+}
 .wrapper {
   background: rgba(81, 142, 160, 0.75);
   vertical-align: middle;
@@ -3313,21 +3327,50 @@ body {
   display: table-cell;
   vertical-align: middle;
 }
-.splash img {
-  display: block;
-  margin: 0px auto;
-  margin-top: calc((100vh - 480px)/2);
+.splash,
+.rules {
+  position: absolute;
+  width: 100vw;
+}
+.splash .wrapper,
+.rules .wrapper {
+  background: rgba(81, 142, 160, 0.5);
+  text-align: center;
+}
+.rules .wrapper {
+  background: rgba(81, 142, 160, 0.9);
+}
+.about {
+  font-size: 22px;
+}
+.about .wrapper {
+  background: rgba(81, 142, 160, 0.85);
+  text-align: center;
+}
+.about h3 {
+  -webkit-text-stroke: 1px #7B0A41;
+  color: #F2F2F2;
+}
+.about p {
+  text-align: center;
+  margin: 10px auto;
+  width: 70%;
 }
 .menu ul {
   list-style: none;
   text-align: center;
 }
-.game .bg {
-  background: url('../img/bg.jpg') no-repeat;
-  background-size: 100% 100%;
-  position: absolute;
-  height: 100vh;
+footer {
+  position: fixed;
+  z-index: 999;
+  bottom: 30px;
   width: 100vw;
+}
+footer .btn {
+  font-size: 28px;
+  display: block;
+  text-align: center;
+  margin: 0 auto;
 }
 .game header {
   text-align: center;
@@ -3335,6 +3378,21 @@ body {
   width: 100%;
   left: 0;
   top: 0;
+}
+.game header .player-title,
+.game header .computer-title {
+  -webkit-text-stroke: 1px #7B0A41;
+  position: absolute;
+  font-size: 32px;
+  display: inline;
+  color: #F2F2F2;
+  top: 10px;
+}
+.game header .player-title {
+  left: 30px;
+}
+.game header .computer-title {
+  right: 30px;
 }
 .game header .scorebox {
   box-shadow: 0px 5px 0px #B71841, 0px 7px 2px 2px rgba(0, 0, 0, 0.3);
@@ -3354,7 +3412,7 @@ body {
   padding: 0px 10px;
 }
 .game main {
-  padding: 0px 30px;
+  padding: 0px 50px;
 }
 .game main .player,
 .game main .computer,
@@ -3397,8 +3455,7 @@ body {
   top: 0;
 }
 .game main .computer i {
-  -webkit-transform: scale(-1, 1);
-          transform: scale(-1, 1);
+  transform: scale(-1, 1);
 }
 .game main .center {
   top: 0;
@@ -3415,8 +3472,7 @@ body {
   animation-fill-mode: both;
 }
 .game main .center ul li:last-child i {
-  -webkit-transform: scale(-1, 1);
-          transform: scale(-1, 1);
+  transform: scale(-1, 1);
 }
 .game main .center .win-msg {
   text-shadow: 0px 1px 0px #FFFFFF;
@@ -3433,16 +3489,15 @@ body {
   animation-fill-mode: both;
   top: 30vh;
 }
-.game footer {
+.game .hidden-overlay {
+  background: transparent;
   position: absolute;
-  bottom: 30px;
+  z-index: 10000;
+  display: none;
+  height: 100vh;
   width: 100vw;
-}
-.game footer .btn {
-  font-size: 28px;
-  display: block;
-  text-align: center;
-  margin: 0 auto;
+  left: 0;
+  top: 0;
 }
 .game .gameover-overlay {
   background: rgba(0, 0, 0, 0.5);
@@ -3477,7 +3532,8 @@ body {
 .game .gameover-overlay .gameover-dialog .gameover-buttons {
   position: absolute;
   bottom: 30px;
-  left: calc(2.5vw);
+  width: 100%;
+  left: 0;
 }
 .game .gameover-overlay .gameover-dialog .gameover-buttons .btn {
   width: 150px;
@@ -3487,8 +3543,8 @@ body {
 .game .gameover-overlay .gameover-dialog .gameover-msg {
   text-shadow: 0px 1px 0px #FFFFFF;
   -webkit-text-stroke: 1px #000;
+  font-size: 34px;
   color: white;
-  font-size: 40px;
 }
 .btn {
   text-shadow: 0px 1px 0px #FFFFFF;
@@ -3528,7 +3584,7 @@ body {
   box-shadow: 0px -5px 0px #26FFFF, 0px -7px 0px #FFFFFF, 0px 10px 0px #6C37BC;
 }
 .btn.green {
-  box-shadow: 0px -5px 0px #FFFF56, 0px -7px 0px #FFFFFF, 0px 10px 0px #256580, 0px 13px 2px 2px rgba(0, 0, 0, 0.3);
+  box-shadow: 0px -5px 0px #FFFF26, 0px -7px 0px #FFFFFF, 0px 10px 0px #256580, 0px 13px 2px 2px rgba(0, 0, 0, 0.3);
   background: #A4E616;
   color: #2D4E10;
 }
@@ -3539,5 +3595,5 @@ body {
   animation-fill-mode: both;
   -webkit-animation-name: tada;
   animation-name: tada;
-  box-shadow: 0px -5px 0px #FFFF56, 0px -7px 0px #FFFFFF, 0px 10px 0px #256580;
+  box-shadow: 0px -5px 0px #FFFF26, 0px -7px 0px #FFFFFF, 0px 10px 0px #256580;
 }

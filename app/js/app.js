@@ -5,6 +5,10 @@ var _page = require('page.js');
 
 var _page2 = _interopRequireDefault(_page);
 
+var _Elements = require('./Services/Elements');
+
+var _GameLogic = require('./Services/GameLogic');
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var loadView = function loadView(view) {
@@ -19,25 +23,39 @@ var loadView = function loadView(view) {
 };
 
 (0, _page2.default)('/', function () {
-	loadView('game');
-	//setTimeout(() => Route('/menu'), 3000);
+	loadView('splash');
+	setTimeout(function () {
+		return (0, _page2.default)('/menu');
+	}, 2000);
 });
 (0, _page2.default)('/menu', loadView);
-(0, _page2.default)('/game', loadView);
+(0, _page2.default)('/rules', loadView);
+(0, _page2.default)('/about', loadView);
+(0, _page2.default)('/game', function () {
+	_Elements.Elem.gameoverDialog.style.display = 'none';
+	_Elements.Elem.gameoverOverlay.style.display = 'none';
+	_GameLogic.GameLogic.resetGame();
+	loadView('game');
+});
 
 (0, _page2.default)();
 
-},{"page.js":8}],2:[function(require,module,exports){
-"use strict";
+},{"./Services/Elements":3,"./Services/GameLogic":4,"page.js":7}],2:[function(require,module,exports){
+'use strict';
 
 Object.defineProperty(exports, "__esModule", {
 	value: true
 });
 exports.Animation = undefined;
 
-var _Elements = require("./Elements");
+var _Elements = require('./Elements');
 
 var Animation = exports.Animation = {
+	btnColor: {
+		rock: 'yellow',
+		paper: 'blue',
+		scissors: 'green'
+	},
 	tieAnimation: function tieAnimation() {
 		_Elements.Elem.msgEl.innerHTML = "Tie! :/";
 		_Elements.Elem.msgEl.style.display = "block";
@@ -45,6 +63,7 @@ var Animation = exports.Animation = {
 		setTimeout(function () {
 			_Elements.Elem.msgEl.style.display = "none";
 			_Elements.Elem.msgEl.classList.remove('shake');
+			_Elements.Elem.hiddenOverlay.style.display = 'none';
 		}, 1000);
 	},
 	winAnimation: function winAnimation() {
@@ -54,6 +73,7 @@ var Animation = exports.Animation = {
 		setTimeout(function () {
 			_Elements.Elem.msgEl.style.display = "none";
 			_Elements.Elem.msgEl.classList.remove('flash');
+			_Elements.Elem.hiddenOverlay.style.display = 'none';
 		}, 1000);
 		_Elements.Elem.playerScoreEl.innerHTML = ++_Elements.Elem.playerScoreEl.innerHTML;
 	},
@@ -64,31 +84,57 @@ var Animation = exports.Animation = {
 		setTimeout(function () {
 			_Elements.Elem.msgEl.style.display = "none";
 			_Elements.Elem.msgEl.classList.remove('swing');
+			_Elements.Elem.hiddenOverlay.style.display = 'none';
 		}, 1000);
 		_Elements.Elem.computerScoreEl.innerHTML = ++_Elements.Elem.computerScoreEl.innerHTML;
 	},
-	playerMoveAnimation: function playerMoveAnimation() {
+	playerMoveAnimation: function playerMoveAnimation(move) {
+		var _this = this;
+
+		_Elements.Elem.playerChoiceEl.firstChild.classList.add('icon-' + move);
+		_Elements.Elem.playerChoiceEl.classList.add(this.btnColor[move]);
 		_Elements.Elem.playerChoiceEl.classList.add('bounceInLeft');
 		_Elements.Elem.playerChoiceEl.style.display = 'inline-block';
+		_Elements.Elem.hiddenOverlay.style.display = 'block';
 		setTimeout(function () {
 			_Elements.Elem.playerChoiceEl.style.display = 'none';
 			_Elements.Elem.playerChoiceEl.classList.remove('bounceInLeft');
-		}, 2500);
+			_Elements.Elem.playerChoiceEl.classList.remove(_this.btnColor[move]);
+			_Elements.Elem.playerChoiceEl.firstChild.classList.remove('icon-' + move);
+		}, 1500);
 	},
-	computerMoveAnimation: function computerMoveAnimation() {
+	computerMoveAnimation: function computerMoveAnimation(move) {
+		var _this2 = this;
+
+		_Elements.Elem.computerChoiceEl.firstChild.classList.add('icon-' + move);
+		_Elements.Elem.computerChoiceEl.classList.add(this.btnColor[move]);
 		_Elements.Elem.computerChoiceEl.classList.add('bounceInRight');
 		_Elements.Elem.computerChoiceEl.style.display = 'inline-block';
 		setTimeout(function () {
 			_Elements.Elem.computerChoiceEl.style.display = 'none';
 			_Elements.Elem.computerChoiceEl.classList.remove('bounceInRight');
-		}, 2000);
+			_Elements.Elem.computerChoiceEl.classList.remove(_this2.btnColor[move]);
+			_Elements.Elem.computerChoiceEl.firstChild.classList.remove('icon-' + move);
+		}, 1500);
 	},
 	gameoverAnimation: function gameoverAnimation(msg) {
-		_Elements.Elem.gameoverMsg = gameoverMsg.innerHTML = msg;
+		_Elements.Elem.gameoverMsg.innerHTML = msg;
 		_Elements.Elem.gameoverOverlay.classList.add('fadeIn');
 		_Elements.Elem.gameoverOverlay.style.display = 'table-cell';
 		_Elements.Elem.gameoverDialog.classList.add('zoomIn');
 		_Elements.Elem.gameoverDialog.style.display = 'block';
+	},
+
+	playAgainAnimation: function playAgainAnimation() {
+		_Elements.Elem.gameoverMsg.innerHTML = "";
+		_Elements.Elem.gameoverDialog.classList.add('zoomOut');
+		_Elements.Elem.gameoverOverlay.classList.add('fadeOut');
+		setTimeout(function () {
+			_Elements.Elem.gameoverDialog.classList.remove('zoomOut');
+			_Elements.Elem.gameoverOverlay.classList.remove('fadeOut');
+			_Elements.Elem.gameoverDialog.style.display = 'none';
+			_Elements.Elem.gameoverOverlay.style.display = 'none';
+		}, 500);
 	}
 };
 
@@ -106,7 +152,8 @@ var Elem = exports.Elem = {
 	computerChoiceEl: document.getElementsByClassName('computer-choice')[0],
 	gameoverOverlay: document.getElementsByClassName('gameover-overlay')[0],
 	gameoverDialog: document.getElementsByClassName('gameover-dialog')[0],
-	gameoverMsg: document.getElementsByClassName('gameover-msg')[0]
+	gameoverMsg: document.getElementsByClassName('gameover-msg')[0],
+	hiddenOverlay: document.getElementsByClassName('hidden-overlay')[0]
 };
 
 },{}],4:[function(require,module,exports){
@@ -115,9 +162,14 @@ var Elem = exports.Elem = {
 Object.defineProperty(exports, "__esModule", {
 	value: true
 });
+exports.GameLogic = undefined;
+
+var _Elements = require('./Elements');
+
 var GameLogic = exports.GameLogic = {
 	playerScore: 0,
 	computerScore: 0,
+	gameOverAt: 10,
 	getComputerChoice: function getComputerChoice() {
 		var computerChoice = Math.random();
 
@@ -130,85 +182,37 @@ var GameLogic = exports.GameLogic = {
 
 	playerWon: function playerWon(player, computer) {
 		if (player === 'rock') {
-			return computer === 'scissors' ? 1 : -1;
+			return computer === 'scissors' ? 1 : 0;
 		} else if (player === 'scissors') {
-			return computer === 'paper' ? 1 : -1;
+			return computer === 'paper' ? 1 : 0;
 		} else if (player === 'paper') {
-			return computer === 'rock' ? 1 : -1;
+			return computer === 'rock' ? 1 : 0;
 		}
 	},
 
 	isGameOver: function isGameOver() {
-		return this.playerScore === 15 || this.computerScore === 15;
+		return this.playerScore === this.gameOverAt || this.computerScore === this.gameOverAt;
 	},
 
 	playerWonGame: function playerWonGame() {
-		return this.playerScore === 15;
+		return this.playerScore === this.gameOverAt;
+	},
+
+	resetGame: function resetGame() {
+		this.playerScore = 0;
+		this.computerScore = 0;
+		_Elements.Elem.playerScoreEl.innerHTML = 0;
+		_Elements.Elem.computerScoreEl.innerHTML = 0;
 	}
+
 };
 
-},{}],5:[function(require,module,exports){
-"use strict";
-
-var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
-
-Object.defineProperty(exports, "__esModule", {
-	value: true
-});
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-var StorageService = (function () {
-	function StorageService() {
-		_classCallCheck(this, StorageService);
-	}
-
-	_createClass(StorageService, [{
-		key: "query",
-		value: function query() {
-			return localStorage;
-		}
-	}, {
-		key: "get",
-		value: function get(key) {
-			if (localStorage[key]) {
-				return JSON.parse(localStorage.getItem(key));
-			} else {
-				return [];
-			}
-		}
-	}, {
-		key: "save",
-		value: function save(key, value) {
-			localStorage.setItem(key, JSON.stringify(value));
-		}
-	}, {
-		key: "delete",
-		value: function _delete(key) {
-			if (localStorage[key]) {
-				localStorage.removeItem(key);
-			}
-		}
-	}, {
-		key: "clear",
-		value: function clear() {
-			localStorage.clear();
-		}
-	}]);
-
-	return StorageService;
-})();
-
-var Storage = exports.Storage = new StorageService();
-
-},{}],6:[function(require,module,exports){
+},{"./Elements":3}],5:[function(require,module,exports){
 'use strict';
 
 var _GameLogic = require('./Services/GameLogic');
 
 var _Animation = require('./Services/Animation');
-
-var _Storage = require('./Services/Storage');
 
 var _Routes = require('./Routes');
 
@@ -219,34 +223,37 @@ var actionButtons = document.querySelectorAll('.player .gamebuttons li');
 		var player = e.target.dataset.player;
 		var computer = _GameLogic.GameLogic.getComputerChoice();
 
-		_Animation.Animation.playerMoveAnimation();
-		setTimeout(function () {
-			_Animation.Animation.computerMoveAnimation();
-		}, 500);
+		_Animation.Animation.playerMoveAnimation(player);
+		_Animation.Animation.computerMoveAnimation(computer);
 
-		if (isGameOver()) {
-			if (_GameLogic.GameLogic.playerWonGame()) {
-				_Animation.Animation.gameoverAnimation("Yeee! You beat the evil computer! :D");
+		setTimeout(function () {
+			if (_GameLogic.GameLogic.isTie(player, computer)) {
+				_Animation.Animation.tieAnimation();
+			} else if (_GameLogic.GameLogic.playerWon(player, computer)) {
+				_GameLogic.GameLogic.playerScore++;
+				_Animation.Animation.winAnimation();
 			} else {
-				_Animation.Animation.gameoverAnimation("Nooo! You have been beaten by the evil computer! :(");
+				_GameLogic.GameLogic.computerScore++;
+				_Animation.Animation.loseAnimation();
 			}
-		} else {
-			setTimeout(function () {
-				if (_GameLogic.GameLogic.isTie(player, computer)) {
-					_Animation.Animation.tieAnimation();
-				} else if (_GameLogic.GameLogic.playerWon(player, computer)) {
-					_GameLogic.GameLogic.playerScore++;
-					_Animation.Animation.winAnimation();
+			if (_GameLogic.GameLogic.isGameOver()) {
+				if (_GameLogic.GameLogic.playerWonGame()) {
+					_Animation.Animation.gameoverAnimation("Yeee! You have beaten the evil computer! :D");
 				} else {
-					_GameLogic.GameLogic.computerScore++;
-					_Animation.Animation.loseAnimation();
+					_Animation.Animation.gameoverAnimation("Nooo! You have been beaten by the evil computer! :(");
 				}
-			}, 1500);
-		}
+			}
+		}, 500);
 	});
 });
 
-},{"./Routes":1,"./Services/Animation":2,"./Services/GameLogic":4,"./Services/Storage":5}],7:[function(require,module,exports){
+var playAgainButton = document.getElementsByClassName('play-again')[0];
+playAgainButton.addEventListener('click', function (e) {
+	_GameLogic.GameLogic.resetGame();
+	_Animation.Animation.playAgainAnimation();
+});
+
+},{"./Routes":1,"./Services/Animation":2,"./Services/GameLogic":4}],6:[function(require,module,exports){
 // shim for using process in browser
 
 var process = module.exports = {};
@@ -339,7 +346,7 @@ process.chdir = function (dir) {
 };
 process.umask = function() { return 0; };
 
-},{}],8:[function(require,module,exports){
+},{}],7:[function(require,module,exports){
 (function (process){
   /* globals require, module */
 
@@ -965,7 +972,7 @@ process.umask = function() { return 0; };
   page.sameOrigin = sameOrigin;
 
 }).call(this,require('_process'))
-},{"_process":7,"path-to-regexp":9}],9:[function(require,module,exports){
+},{"_process":6,"path-to-regexp":8}],8:[function(require,module,exports){
 /**
  * Expose `pathtoRegexp`.
  */
@@ -1096,4 +1103,4 @@ function pathtoRegexp(path, keys, options) {
   return new RegExp(path, flags);
 };
 
-},{}]},{},[6]);
+},{}]},{},[5]);

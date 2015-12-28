@@ -1,6 +1,5 @@
 import {GameLogic}  from './Services/GameLogic';
 import {Animation}  from './Services/Animation';
-import {Storage} 	from './Services/Storage';
 import {Routes}  	from './Routes';
 
 let actionButtons   = document.querySelectorAll('.player .gamebuttons li');
@@ -10,29 +9,32 @@ let actionButtons   = document.querySelectorAll('.player .gamebuttons li');
 		let player   = e.target.dataset.player;
 		let computer = GameLogic.getComputerChoice()
 		
-		Animation.playerMoveAnimation();
-		setTimeout(()=> {
-			Animation.computerMoveAnimation();
-		}, 500);
+		Animation.playerMoveAnimation(player);
+		Animation.computerMoveAnimation(computer);
 		
-		if(isGameOver()) {
-			if(GameLogic.playerWonGame()) {
-				Animation.gameoverAnimation("Yeee! You beat the evil computer! :D");
+		setTimeout(()=>{
+			if(GameLogic.isTie(player, computer)) {
+				Animation.tieAnimation();
+			} else if(GameLogic.playerWon(player, computer)) {
+				GameLogic.playerScore++;
+				Animation.winAnimation();
 			} else {
-				Animation.gameoverAnimation("Nooo! You have been beaten by the evil computer! :(");
+				GameLogic.computerScore++;
+				Animation.loseAnimation();
 			}
-		} else {
-			setTimeout(()=>{
-				if(GameLogic.isTie(player, computer)) {
-					Animation.tieAnimation();
-				} else if(GameLogic.playerWon(player, computer)) {
-					GameLogic.playerScore++;
-					Animation.winAnimation();
+			if(GameLogic.isGameOver()) {
+				if(GameLogic.playerWonGame()) {
+					Animation.gameoverAnimation("Yeee! You have beaten the evil computer! :D");
 				} else {
-					GameLogic.computerScore++;
-					Animation.loseAnimation();
+					Animation.gameoverAnimation("Nooo! You have been beaten by the evil computer! :(");
 				}
-			}, 1500);
-		}
+			}
+		}, 500);
 	});
+});
+
+var playAgainButton = document.getElementsByClassName('play-again')[0];
+playAgainButton.addEventListener('click', (e) => {
+	GameLogic.resetGame();
+	Animation.playAgainAnimation();
 });

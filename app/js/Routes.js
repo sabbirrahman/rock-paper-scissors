@@ -1,4 +1,6 @@
-import Route from 'page.js';
+import Route 	   from 'page.js';
+import {Elem}      from './Services/Elements';
+import {GameLogic} from './Services/GameLogic';
 
 let loadView = function(view) {
 	let viewId = view.path ? view.path.substring(1, view.path.length) : view;
@@ -12,10 +14,17 @@ let loadView = function(view) {
 }
 
 Route('/'	 , () => {
-	loadView('game');
-	//setTimeout(() => Route('/menu'), 3000);
+	loadView('splash');
+	setTimeout(() => Route('/menu'), 2000);
 });
 Route('/menu', loadView);
-Route('/game', loadView);
+Route('/rules', loadView);
+Route('/about', loadView);
+Route('/game', () => {	
+	Elem.gameoverDialog.style.display = 'none';
+	Elem.gameoverOverlay.style.display = 'none';
+	GameLogic.resetGame();
+	loadView('game');
+});
 
 Route();

@@ -6,5 +6,6 @@ export let Elem = {
 	computerChoiceEl : document.getElementsByClassName('computer-choice')[0],
 	gameoverOverlay  : document.getElementsByClassName('gameover-overlay')[0],
 	gameoverDialog   : document.getElementsByClassName('gameover-dialog')[0],
-	gameoverMsg	 	 : document.getElementsByClassName('gameover-msg')[0]
+	gameoverMsg	 	 : document.getElementsByClassName('gameover-msg')[0],
+	hiddenOverlay	 : document.getElementsByClassName('hidden-overlay')[0],
 }

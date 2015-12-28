@@ -3,7 +3,7 @@
 @import (less) "components/fonticon.css";
 @import "components/fonts";
 @import "components/variables";
-//@import "components/_mixins";
+@import "components/mixins";
 
 // Default Settings
 @-ms-viewport {
@@ -17,7 +17,7 @@
 	margin: 0px;
 	padding: 0px;
 	font-family: @font;
-	//.disableSelection();
+	.disableSelection();
 }
 
 html {
@@ -50,6 +50,14 @@ body {
 .view {
 	display: none;
 }
+.bg {
+	background: url('../img/bg.jpg') no-repeat;
+	background-size: 100% 100%;
+	position: absolute;
+	height: 100vh;
+	width: 100vw;
+	z-index: -1;
+}
 .wrapper {
 	background: rgba(81, 142, 160, 0.75);
 	vertical-align: middle;
@@ -67,14 +75,39 @@ body {
 
 
 // Splash Screen
-.splash {
-	img {
-		display: block;
-		margin: 0px auto;
-		margin-top: ~'calc((100vh - 480px)/2)';
+.splash, .rules {
+	position: absolute;
+	width: 100vw;
+	.wrapper {
+		background: rgba(81, 142, 160, 0.50);
+		text-align: center;
 	}
 }
 
+// Rule
+.rules {
+	.wrapper {
+		background: rgba(81, 142, 160, 0.90);
+	}
+}
+
+// About
+.about {
+	font-size: 22px;
+	.wrapper {
+		background: rgba(81, 142, 160, 0.85);
+		text-align: center;
+	}
+	h3 {
+		-webkit-text-stroke: 1px #7B0A41;
+		color: #F2F2F2;
+	}
+	p {
+		text-align: center;
+		margin: 10px auto;
+		width: 70%;
+	}
+}
 
 // Menu
 .menu {
@@ -84,16 +117,23 @@ body {
 	}
 }
 
+// Footer Button
+footer {
+	position: fixed;
+	z-index: 999;
+	bottom: 30px;
+	width: 100vw;
+	.btn {
+		font-size: 28px;
+		display: block;
+		text-align: center;
+		margin: 0 auto;
+	}
+}
+
 
 // Gameplay Screen
 .game {
-	.bg {
-		background: url('../img/bg.jpg') no-repeat;
-		background-size: 100% 100%;
-		position: absolute;
-		height: 100vh;
-		width: 100vw;
-	}
 
 	header {
 		text-align: center;
@@ -101,6 +141,21 @@ body {
 		width: 100%;
 		left: 0;
 		top: 0;
+
+		.player-title, .computer-title {
+			-webkit-text-stroke: 1px #7B0A41;
+			position: absolute;
+			font-size: 32px;
+			display: inline;
+			color: #F2F2F2;
+			top: 10px;
+		}
+		.player-title {
+			left: 30px;
+		}
+		.computer-title {
+			right: 30px;
+		}
 		.scorebox {
 			box-shadow: 0px 5px 0px #B71841,
 						0px 7px 2px 2px rgba(0, 0, 0, 0.3);
@@ -121,7 +176,7 @@ body {
 	}
 
 	main {
-		padding: 0px 30px;
+		padding: 0px 50px;
 
 		.player, .computer, .center {
 			position: absolute;
@@ -188,17 +243,16 @@ body {
 			}
 		}
 	}
-
-	footer {
+	
+	.hidden-overlay {
+		background: transparent;
 		position: absolute;
-		bottom: 30px;
+		z-index: 10000;
+		display: none;
+		height: 100vh;
 		width: 100vw;
-		.btn {
-			font-size: 28px;
-			display: block;
-			text-align: center;
-			margin: 0 auto;
-		}
+		left: 0;
+		top: 0;
 	}
 
 	.gameover-overlay {
@@ -226,7 +280,8 @@ body {
 			.gameover-buttons {
 				position: absolute;
 				bottom: 30px;
-				left: calc(20vw - 17.5px);
+				width: 100%;
+				left: 0;
 				.btn {
 					width: 150px;
 					font-size: 32px;
@@ -236,8 +291,8 @@ body {
 			.gameover-msg {
 				text-shadow: 0px 1px 0px #FFFFFF;
   				-webkit-text-stroke: 1px #000;
+				font-size: 34px;
   				color: white;
-				font-size: 40px;
 			}
 		}
 	}
@@ -293,7 +348,7 @@ body {
 
 .btn.green {
 	box-shadow: 
-		0px -5px 0px #FFFF56,
+		0px -5px 0px #FFFF26,
 		0px -7px 0px #FFFFFF,
 		0px 10px 0px #256580,
 		0px 13px 2px 2px rgba(0, 0, 0, 0.3);
@@ -305,7 +360,7 @@ body {
 	.animated();
 	.tada();
 	box-shadow: 
-		0px -5px 0px #FFFF56,
+		0px -5px 0px #FFFF26,
 		0px -7px 0px #FFFFFF,
 		0px 10px 0px #256580;
 }
