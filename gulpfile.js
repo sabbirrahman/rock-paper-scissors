@@ -38,7 +38,7 @@ gulp.task("js", function () {
 // Serve the Server
 gulp.task('serve', function() {
     browserSync.init({
-        server: './app/'
+        server: './app'
     });
 });
 // Convert .svg to Icon Font

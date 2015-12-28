@@ -11,6 +11,8 @@ var _GameLogic = require('./Services/GameLogic');
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+var baseUrl = "/";
+
 var loadView = function loadView(view) {
 	var viewId = view.path ? view.path.substring(1, view.path.length) : view;
 
@@ -22,16 +24,22 @@ var loadView = function loadView(view) {
 	return false;
 };
 
-(0, _page2.default)('/', function () {
+(0, _page2.default)(baseUrl, function () {
 	loadView('splash');
 	setTimeout(function () {
-		return (0, _page2.default)('/menu');
+		return (0, _page2.default)(baseUrl + 'menu');
 	}, 2000);
 });
-(0, _page2.default)('/menu', loadView);
-(0, _page2.default)('/rules', loadView);
-(0, _page2.default)('/about', loadView);
-(0, _page2.default)('/game', function () {
+(0, _page2.default)(baseUrl + 'menu', function () {
+	loadView('menu');
+});
+(0, _page2.default)(baseUrl + 'rules', function () {
+	loadView('rules');
+});
+(0, _page2.default)(baseUrl + 'about', function () {
+	loadView('about');
+});
+(0, _page2.default)(baseUrl + 'game', function () {
 	_Elements.Elem.gameoverDialog.style.display = 'none';
 	_Elements.Elem.gameoverOverlay.style.display = 'none';
 	_GameLogic.GameLogic.resetGame();
