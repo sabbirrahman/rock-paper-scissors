@@ -20,7 +20,9 @@ var browserSync  = require('browser-sync').create();
 gulp.task('less', function() {
 	gulp.src('./app/css/*.less')
 		.pipe(plumber())
-		.pipe(less())
+		.pipe(less({
+    		plugins: [autoprefix]
+ 		}))
 		.pipe(gulp.dest('./app/css'));
 });
 // Compile ES6 Files

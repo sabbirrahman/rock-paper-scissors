@@ -6,7 +6,7 @@
         <meta http-equiv="x-ua-compatible" content="ie=edge">
         <title>Rock! Paper! Scissor!</title>
         <meta name="description" content="">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
         <link rel="apple-touch-icon" href="apple-touch-icon.png">
         <link rel="icon" href="favicon.ico" type="image/x-icon"/>
@@ -19,51 +19,53 @@
             <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
         <![endif]-->
 
+        <div class="bg"></div>
         <!-- Splash Screen View -->
         <div class="view splash" id="splash">
-            <div class="bg"></div>
-            <div class="wrapper">
-                <div class="content">
-                    <img src="img/splash.png" alt="">
-                </div>
+            <div class="flexbox">
+                <img src="img/splash.png">
             </div>
         </div>
 
         <!-- Rules View -->
         <div class="view rules" id="rules">
             <div class="bg"></div>
-            <div class="wrapper">
-                <div class="content">
-                    <img src="img/rules.png" alt="">
-                </div>
-            </div>
-            <footer>
+            <div class="flexbox">
+                <img src="img/rules.png">
                 <a class="btn yellow hover" href="menu">Goto Menu!</a>
-            </footer>
+            </div>
         </div>
 
         <!-- Menu View -->
         <div class="view menu" id="menu">
             <div class="bg"></div>
-            <div class="wrapper">
-                <div class="content">
-                    <ul>
-                        <a class="btn yellow hover" href="game"><li><span class="text">Play!</span></li></a><br>
-                        <a class="btn blue hover" href="rules"><li><span class="text">Rules!</span></li></a><br>
-                        <a class="btn green hover" href="about"><li><span class="text">About!</span></li></a>
-                    </ul>
-                </div>
+            <div class="flexbox">
+                <ul>
+                    <a class="btn yellow hover" href="game"><li><span class="text">Play!</span></li></a><br>
+                    <a class="btn blue hover" href="rules"><li><span class="text">Rules!</span></li></a><br>
+                    <a class="btn green hover" href="about"><li><span class="text">About!</span></li></a>
+                </ul>
             </div>
         </div>
 
         <!-- Gameplay View -->
-        <div class="view game" id="game">
-            <div class="bg"></div>
-            <div class="wrapper">
-                <div class="content">
-                    <div class="hidden-overlay"></div>
-                    <header>
-                        <div class="player-title">Player</div>
+        <div class="view" id="game">
+            <div class="flexbox gameplay">
+                <div class="sub-flexbox left">
+                    <div class="title player">Player</div>
+                    <div class="gab btn yellow hover" data-player="rock">
+                        <i class="icon icon-rock" data-player="rock"></i>
+                    </div>
+                    <div class="gab btn blue hover" data-player="paper">
+                        <i class="icon icon-paper" data-player="paper"></i>
+                    </div>
+                    <div class="gab btn green hover" data-player="scissors">
+                        <i class="icon icon-scissors" data-player="scissors"></i>
+                    </div>
+                </div>
+                
+                <div class="sub-flexbox center">
+                    <div class="scoreboard">
                         <div class="scorebox">
                             <span class="player-score">0</span>
                             <span class="gap">-</span>
@@ -71,65 +73,53 @@
                             <span class="gap">-</span>
                             <span class="computer-score">0</span>
                         </div>
-                        <div class="computer-title">Computer</div>
-                    </header>
-                    <main id="game">
-                        <div class="player">
-                            <ul class="gamebuttons">
-                                <li class="btn yellow hover" data-player="rock"><i class="icon icon-rock" data-player="rock"></i></li>
-                                <li class="btn blue hover" data-player="paper"><i class="icon icon-paper" data-player="paper"></i></li>
-                                <li class="btn green hover" data-player="scissors"><i class="icon icon-scissors" data-player="scissors"></i></li>
-                            </ul>
-                        </div>
-                        <div class="center">
-                            <div class="win-msg"></div>
-                            <ul>
-                                <li class="player-choice btn"><i class="icon"></i></li>
-                                <li class="computer-choice btn"><i class="icon"></i></li>
-                            </ul>
-                        </div>
-                        <div class="computer">
-                            <ul class="gamebuttons">
-                                <li class="btn yellow"><i class="icon icon-rock"></i></li>
-                                <li class="btn blue"><i class="icon icon-paper"></i></li>
-                                <li class="btn green"><i class="icon icon-scissors"></i></li>
-                            </ul>
-                        </div>
-                    </main>
-                    <footer>
-                        <a class="btn yellow hover" href="menu">Goto Menu!</a>
-                    </footer>
-                    <div class="gameover-overlay">
-                        <div class="gameover-dialog">
-                            <div class="gameover-msg"></div>
-                            <div class="gameover-buttons">
-                                <a href="#" class="btn blue hover play-again">Play Again!</a>
-                            </div>
-                        </div>
+                        <div class="win-msg">Win Msg!</div>
+                    </div>
+                    <div class="warzone">
+                        <div class="gab btn player-choice"><i class="icon"></i></div>
+                        <div class="gab btn computer-choice"><i class="icon"></i></div>
+                    </div>
+                    <div class="back-to-menu-btn">
+                        <a class="btn blue hover" href="menu">Goto Menu!</a>
+                    </div>
+                </div>
+                
+                <div class="sub-flexbox right">
+                    <div class="title computer">Computer</div>
+                    <div class="gab btn yellow"><i class="icon icon-rock"></i></div>
+                    <div class="gab btn blue"><i class="icon icon-paper"></i></div>
+                    <div class="gab btn green"><i class="icon icon-scissors"></i></div>
+                </div>
+                
+                <div class="hidden-overlay"></div> 
+                <div class="gameover-overlay">
+                    <div class="gameover-dialog">
+                        <div class="gameover-msg">Nooo! You have been beaten by the evil computer! :(</div>
+                        <a href="#" class="btn yellow hover play-again">Play Again!</a>
+                        <a href="/menu" class="btn green hover play-again">Goto Menu!</a>
                     </div>
                 </div>
             </div>
         </div>
 
-        <!-- Rules View -->
+        <!-- About View -->
         <div class="view about" id="about">
             <div class="bg"></div>
-            <div class="wrapper">
-                <div class="content">
-                    <h3>About Game</h3>
-                    <p>Rock-paper-scissors is a zero-sum hand game usually played between two people, in which each player simultaneously forms one of three shapes with an outstretched hand. These shapes are "rock" (a simple fist), "paper" (a flat hand), and "scissors" (a fist with the index and middle fingers together forming a V). The game has only three possible outcomes other than a tie: a player who decides to play rock will beat another player who has chosen scissors ("rock crushes scissors") but will lose to one who has played paper ("paper covers rock"); a play of paper will lose to a play of scissors ("scissors cut paper"). If both players throw the same shape, the game is tied and is usually immediately replayed to break the tie
-                    <a href="https://en.wikipedia.org/wiki/Rock-paper-scissors">- Wikipedia</a></p>
-                    <h3>About Developer</h3>
-                    <ul>
-                        <li>Name: Md. Sabbir Rahman</li>
-                        <li>Work: Front-end Developer, <a href="http://airly.me">Airly Ltd</a></li>
-                        <li>Education: B.Sc (Engg) in CSE, Uttara University</li>
-                    </ul>
-                </div>
+            <div class="flexbox">
+                <h3>About Game</h3>
+                <p>Rock-paper-scissors is a zero-sum hand game usually played between two people, in which each player simultaneously forms one of three shapes with an outstretched hand. These shapes are "rock" (a simple fist), "paper" (a flat hand), and "scissors" (a fist with the index and middle fingers together forming a V). The game has only three possible outcomes other than a tie: a player who decides to play rock will beat another player who has chosen scissors ("rock crushes scissors") but will lose to one who has played paper ("paper covers rock"); a play of paper will lose to a play of scissors ("scissors cut paper"). If both players throw the same shape, the game is tied and is usually immediately replayed to break the tie
+                <a href="https://en.wikipedia.org/wiki/Rock-paper-scissors">- Wikipedia</a></p>
+                <h3>About Developer</h3>
+                <ul>
+                    <li>Name: Md. Sabbir Rahman</li>
+                    <li>Work: Front-end Developer, <a href="http://airly.me">Airly Ltd</a></li>
+                    <li>Education: B.Sc (Engg) in CSE, Uttara University</li>
+                    <li><a href="http://fb.me/blackheartadhar">Facebook</a> / <a href="mailto:sabbir.jassim@gmail.com">Mail</a> / <a href="http://github.com/sabbirrahman">Github</a></li>
+                </ul>
+                <footer>
+                    <a class="btn yellow hover" href="menu">Goto Menu!</a>
+                </footer>
             </div>
-            <footer>
-                <a class="btn yellow hover" href="menu">Goto Menu!</a>
-            </footer>
         </div>
 
         <script src="js/app.js"></script>

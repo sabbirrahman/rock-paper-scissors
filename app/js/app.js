@@ -116,6 +116,7 @@ var Animation = exports.Animation = {
 
 		_Elements.Elem.computerChoiceEl.firstChild.classList.add('icon-' + move);
 		_Elements.Elem.computerChoiceEl.classList.add(this.btnColor[move]);
+		_Elements.Elem.computerChoiceEl.classList.add('reflect');
 		_Elements.Elem.computerChoiceEl.classList.add('bounceInRight');
 		_Elements.Elem.computerChoiceEl.style.display = 'inline-block';
 		setTimeout(function () {
@@ -128,9 +129,8 @@ var Animation = exports.Animation = {
 	gameoverAnimation: function gameoverAnimation(msg) {
 		_Elements.Elem.gameoverMsg.innerHTML = msg;
 		_Elements.Elem.gameoverOverlay.classList.add('fadeIn');
-		_Elements.Elem.gameoverOverlay.style.display = 'table-cell';
+		_Elements.Elem.gameoverOverlay.style.display = 'flex';
 		_Elements.Elem.gameoverDialog.classList.add('zoomIn');
-		_Elements.Elem.gameoverDialog.style.display = 'block';
 	},
 
 	playAgainAnimation: function playAgainAnimation() {
@@ -140,7 +140,6 @@ var Animation = exports.Animation = {
 		setTimeout(function () {
 			_Elements.Elem.gameoverDialog.classList.remove('zoomOut');
 			_Elements.Elem.gameoverOverlay.classList.remove('fadeOut');
-			_Elements.Elem.gameoverDialog.style.display = 'none';
 			_Elements.Elem.gameoverOverlay.style.display = 'none';
 		}, 500);
 	}
@@ -224,7 +223,7 @@ var _Animation = require('./Services/Animation');
 
 var _Routes = require('./Routes');
 
-var actionButtons = document.querySelectorAll('.player .gamebuttons li');
+var actionButtons = document.querySelectorAll('.sub-flexbox.left .gab');
 
 [].forEach.call(actionButtons, function (actionButton) {
 	actionButton.addEventListener('click', function (e) {
@@ -259,6 +258,7 @@ var playAgainButton = document.getElementsByClassName('play-again')[0];
 playAgainButton.addEventListener('click', function (e) {
 	_GameLogic.GameLogic.resetGame();
 	_Animation.Animation.playAgainAnimation();
+	e.preventDefault();
 });
 
 },{"./Routes":1,"./Services/Animation":2,"./Services/GameLogic":4}],6:[function(require,module,exports){

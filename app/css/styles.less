@@ -18,6 +18,8 @@
 	padding: 0px;
 	font-family: @font;
 	.disableSelection();
+	-webkit-tap-highlight-color: rgba(0,0,0,0);
+	-webkit-tap-highlight-color: transparent; /* For some Androids */
 }
 
 html {
@@ -41,15 +43,15 @@ a {
 }
 body {
     position: relative;
+	overflow: hidden;
     font-size: 16px;
 }
 .hover {
 	cursor: pointer;
 }
 // End of Default Settings
-.view {
-	display: none;
-}
+
+// Common Styles
 .bg {
 	background: url('../img/bg.jpg') no-repeat;
 	background-size: 100% 100%;
@@ -58,196 +60,208 @@ body {
 	width: 100vw;
 	z-index: -1;
 }
-.wrapper {
-	background: rgba(81, 142, 160, 0.75);
-	vertical-align: middle;
-	position: fixed;
-	display: table;
+.view {
+	display: none;
+}
+.flexbox {
+	display: flex;
 	height: 100vh;
 	width: 100vw;
-	left: 0px;
-	top: 0px;
-	.content {
-		display: table-cell;
-		vertical-align: middle;
+	.sub-flexbox {
+		display: flex;
 	}
 }
 
-
 // Splash Screen
 .splash, .rules {
-	position: absolute;
-	width: 100vw;
-	.wrapper {
-		background: rgba(81, 142, 160, 0.50);
-		text-align: center;
+	.flexbox {
+		.centerized();
+		background: rgba(81, 142, 160, 0.3);
+		img {
+			max-width: 480px;
+			max-height: 360px;
+		}
 	}
 }
 
 // Rule
 .rules {
-	.wrapper {
-		background: rgba(81, 142, 160, 0.90);
+	.flexbox {
+		.centerized();
+		flex-direction: column;
+		justify-content: space-around;
+		background: rgba(81, 142, 160, 0.50);
+		img {
+			max-width: 480px;
+			max-height: 360px;
+		}
+	}
+	.btn {
+		font-size: 1.750em;
+		position: absolute;
+		text-align: center;
+		width: 150px;
+		bottom: 5px;
+		right: 5px;
 	}
 }
 
 // About
 .about {
-	font-size: 22px;
-	.wrapper {
-		background: rgba(81, 142, 160, 0.85);
+	overflow-y: auto;
+	font-size: 1.375em;
+	.flexbox {
+		overflow: auto;
+		.centerized();
+		flex-direction: column;
+		justify-content: space-around;
+		background: rgba(255, 255, 255, 0.4);
 		text-align: center;
 	}
 	h3 {
 		-webkit-text-stroke: 1px #7B0A41;
 		color: #F2F2F2;
 	}
+	ul {
+		list-style: none;
+	}
 	p {
 		text-align: center;
 		margin: 10px auto;
 		width: 70%;
 	}
+	.btn {
+		font-size: 1.2em;
+		position: absolute;
+		text-align: center;
+		width: 150px;
+		bottom: 5px;
+		right: 5px;
+	}
 }
 
 // Menu
 .menu {
+	.flexbox {
+		background: rgba(81, 142, 160, 0.3);
+		.centerized();
+	}
 	ul {
 		list-style: none;
 		text-align: center;
 	}
 }
 
-// Footer Button
-footer {
-	position: fixed;
-	z-index: 999;
-	bottom: 30px;
-	width: 100vw;
-	.btn {
-		font-size: 28px;
-		display: block;
-		text-align: center;
-		margin: 0 auto;
-	}
+
+// GAB = Game Action Button ie: Rock, Paper or Scissors Button
+.gab.btn {
+	border-radius: 100%;
+	text-align: center;
+	font-size: 4.000em;
+	padding: 25px;
+	height: 120px;
+	width: 120px;
 }
-
-
 // Gameplay Screen
-.game {
-
-	header {
-		text-align: center;
-		position: fixed;
-		width: 100%;
-		left: 0;
-		top: 0;
-
-		.player-title, .computer-title {
+.gameplay.flexbox {
+	background: rgba(81, 142, 160, 0.2);
+	padding: 0px 20px;
+  	flex-direction: row;
+  	justify-content: space-between;
+	
+	.sub-flexbox {
+		flex-direction:column;
+		justify-content: space-around;
+		.title {
 			-webkit-text-stroke: 1px #7B0A41;
 			position: absolute;
-			font-size: 32px;
-			display: inline;
+			font-size: 2.000em;
 			color: #F2F2F2;
-			top: 10px;
-		}
-		.player-title {
-			left: 30px;
-		}
-		.computer-title {
-			right: 30px;
-		}
-		.scorebox {
-			box-shadow: 0px 5px 0px #B71841,
-						0px 7px 2px 2px rgba(0, 0, 0, 0.3);
-			background: #ec4b74;
-			padding: 5px 10px;
-			margin: 0px auto;
-			width: 480px;
-			h1, span {
-  				-webkit-text-stroke: 1px #7B0A41;
-				font-size: 38px;
-				display: inline;
-				color: #F2F2F2;
-			}
-			.gap {
-				padding: 0px 10px;
-			}
+			top: 0px;
 		}
 	}
+	.sub-flexbox.left, .sub-flexbox.right {
+		padding: 50px 0px;
+	}
 
-	main {
-		padding: 0px 50px;
+	.sub-flexbox.left {
+		.title { left: 10px; }
+	}
 
-		.player, .computer, .center {
+	.sub-flexbox.right {
+		.gab { .reflect(); }
+		.title { right: 10px; }
+	}
+	
+	.sub-flexbox.center {
+		.centerized();
+		.scoreboard {
 			position: absolute;
-			text-align: center;
-			display: table;
-			height: 100vh;
-			ul {
-				display: table-cell;
-				vertical-align: middle;
-				li {
-					display: block;
-					width: 120px;
-					height: 120px;
-					text-align: center;
-					border-radius: 100%;
-					padding: 20px;
-					margin: 30px auto;
-					i {
-						font-size: 64px;
-						padding: 5px;
-						display: inline-block;
-					}
-				}
-			}
-		}
-
-		.player {
-			left: 30px;
-			top: 0;
-		}
-		
-		.computer {
-			right: 30px;
-			top: 0;
-			i { transform: scale(-1, 1); }
-		}
-
-		.center {
-			top: 0;
-			left: 0;
+			z-index: 9999;
 			width: 100%;
-			z-index: -1;
-			ul {
-				li {
-					margin: 0px 10px;
-					display: none;
-					.animated();
+			left: 0;
+			top: 0;
+			.scorebox {
+				box-shadow: 0px 5px 0px #B71841,
+							0px 7px 2px 2px rgba(0, 0, 0, 0.3);
+				text-align: center;
+				background: #ec4b74;
+				max-width: 320px;
+				margin: 0 auto;
+				h1, span {
+	  				-webkit-text-stroke: 1px #7B0A41;
+					font-size: 2.375em;
+					display: inline;
+					color: #F2F2F2;
 				}
-				li:last-child {
-					i { transform: scale(-1, 1); }
+				.gap {
+					padding: 0px 10px;
 				}
 			}
 			.win-msg {
 				text-shadow: 0px 1px 0px #FFFFFF;
-  				-webkit-text-stroke: 1px #000;
-				position: absolute;
+					-webkit-text-stroke: 1px #000;
 				text-align: center;
-				font-size: 38px;
+				padding-top: 20px;
+				position: absolute;
+				font-size: 2.313em;
 				display: none;
 				color: white;
-				width: 100%;
 				.animated();
-				top: 30vh;
+				width:100%;
+				left: 0px;
+			}
+		}
+		.warzone {
+			.gab {
+				.animated();
+				display: none;
+				margin: 0px 10px;
+			}
+			.computer-choice i {
+				display: inline-block;
+				.reflect();
+			}
+		}
+		.back-to-menu-btn {
+			position: absolute;
+			width: 100%;
+			bottom: 0px;
+			left: 0;
+			.btn {
+				display: block;
+				text-align: center;
+				font-size: 1.750em;
+				margin: 0 auto;
+				margin-bottom: 20px;
 			}
 		}
 	}
-	
+
 	.hidden-overlay {
 		background: transparent;
 		position: absolute;
-		z-index: 10000;
+		z-index: 1001;
 		display: none;
 		height: 100vh;
 		width: 100vw;
@@ -256,12 +270,12 @@ footer {
 	}
 
 	.gameover-overlay {
-		background: rgba(0, 0, 0, 0.5);
-		vertical-align: middle;
-		display: table-cell;
-		position: relative;
-		z-index: 10000;
+		background: rgba(0, 0, 0, 0.75);
+		position: absolute;
+		display: flex;
 		display: none;
+		z-index: 1000;
+		.centerized();
 		height: 100vh;
 		width: 100vw;
 		.animated();
@@ -270,43 +284,35 @@ footer {
 		.gameover-dialog {
 			background: rgba(81, 142, 160, 0.75);
 			border-radius: 15px;
-			position: relative;
 			text-align: center;
-			margin: 0 auto;
 			padding: 20px;
-			height: 35vh;
+			width: 400px;
 			.animated();
-			width: 40vw;
-			.gameover-buttons {
-				position: absolute;
-				bottom: 30px;
-				width: 100%;
-				left: 0;
-				.btn {
-					width: 150px;
-					font-size: 32px;
-					margin: 0px 5px;
-				}
-			}
 			.gameover-msg {
 				text-shadow: 0px 1px 0px #FFFFFF;
   				-webkit-text-stroke: 1px #000;
-				font-size: 34px;
+				font-size: 2.000em;
   				color: white;
+			}
+			.btn {
+				margin: 20px 5px;
+				margin-bottom: 10px;
+				font-size: 1.750em;
+				width: 130px;
 			}
 		}
 	}
 }
 
 
-// Util
+// Buttons
 .btn {
 	text-shadow: 0px 1px 0px #FFFFFF;
 	display: inline-block;
 	border-radius: 15px;
 	padding: 5px 0px;
 	margin: 15px 0px;
-	font-size: 42px;
+	font-size: 2.625em;
 	width: 200px;
 }
 
@@ -363,4 +369,65 @@ footer {
 		0px -5px 0px #FFFF26,
 		0px -7px 0px #FFFFFF,
 		0px 10px 0px #256580;
+}
+
+// Media Query
+@media only screen and (max-width:848px){
+	body {
+		font-size: 14px;
+	}
+	.btn.gab {
+		font-size: 3.0em;
+		padding: 10px;
+		height: 70px;
+		width: 70px;
+	}
+	.flexbox.gameplay {
+		.back-to-menu-btn {
+			.btn {
+				width: 120px;
+			}
+		}
+	}
+}
+
+@media only screen and (max-width:720px){
+	body {
+		font-size: 12px;
+	}
+	.btn.gab {
+		font-size: 3.0em;
+		padding: 10px;
+		height: 60px;
+		width: 60px;
+	}
+}
+
+@media only screen and (max-width:600px){
+	.btn.gab {
+		font-size: 2.0em;
+		padding: 8px;
+		height: 50px;
+		width: 50px;
+	}
+}
+
+
+@media only screen and (min-width:1400px){
+	body {
+		font-size: 24px;
+	}
+	.btn.gab {
+		font-size: 4.0em;
+		padding: 50px;
+		height: 200px;
+		width: 200px;
+	}
+	.flexbox.gameplay {
+		.back-to-menu-btn {
+			.btn {
+				width: 200px;
+			}
+		}
+	}
 }

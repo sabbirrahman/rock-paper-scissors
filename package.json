@@ -1,6 +1,6 @@
 {
   "name": "rock-paper-scissors",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "description": "Class rock paper scissors game.",
   "main": "index.js",
   "scripts": {
