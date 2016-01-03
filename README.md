@@ -18,4 +18,8 @@ This is the well known classical game **[Rock! Paper! Scissors!](https://en.wiki
 # Build Dist
 	gulp build
 
+# Special Thanks
+
+**[Vasili Tkach](https://www.behance.net/Fenriz)** for giving away an awesome game UI kit **["Funtique"](https://www.behance.net/gallery/30134915/-Funtique-game-UI-kit-free-PSD)**.
+
 ## Enjoy
