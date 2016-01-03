@@ -446,7 +446,8 @@ Copyright (c) 2015 Daniel Eden
   -webkit-animation-name: bounce;
   animation-name: bounce;
   -webkit-transform-origin: center bottom;
-  transform-origin: center bottom;
+  -ms-transform-origin: center bottom;
+      transform-origin: center bottom;
 }
 @-webkit-keyframes flash {
   from,
@@ -665,7 +666,8 @@ Copyright (c) 2015 Daniel Eden
 }
 .swing {
   -webkit-transform-origin: top center;
-  transform-origin: top center;
+  -ms-transform-origin: top center;
+      transform-origin: top center;
   -webkit-animation-name: swing;
   animation-name: swing;
 }
@@ -870,7 +872,8 @@ Copyright (c) 2015 Daniel Eden
   -webkit-animation-name: jello;
   animation-name: jello;
   -webkit-transform-origin: center;
-  transform-origin: center;
+  -ms-transform-origin: center;
+      transform-origin: center;
 }
 @-webkit-keyframes bounceIn {
   from,
@@ -3272,10 +3275,12 @@ Copyright (c) 2015 Daniel Eden
   font-family: "Dimbo-Regular";
   -webkit-touch-callout: none;
   -webkit-user-select: none;
-  -khtml-user-select: none;
   -moz-user-select: none;
   -ms-user-select: none;
   user-select: none;
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+  -webkit-tap-highlight-color: transparent;
+  /* For some Androids */
 }
 html {
   height: 100%;
@@ -3297,13 +3302,11 @@ a:link {
 }
 body {
   position: relative;
+  overflow: hidden;
   font-size: 16px;
 }
 .hover {
   cursor: pointer;
-}
-.view {
-  display: none;
 }
 .bg {
   background: url('../img/bg.jpg') no-repeat;
@@ -3313,199 +3316,288 @@ body {
   width: 100vw;
   z-index: -1;
 }
-.wrapper {
-  background: rgba(81, 142, 160, 0.75);
-  vertical-align: middle;
-  position: fixed;
-  display: table;
+.view {
+  display: none;
+}
+.flexbox {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
   height: 100vh;
   width: 100vw;
-  left: 0px;
-  top: 0px;
 }
-.wrapper .content {
-  display: table-cell;
-  vertical-align: middle;
+.flexbox .sub-flexbox {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
 }
-.splash,
-.rules {
-  position: absolute;
-  width: 100vw;
+.splash .flexbox,
+.rules .flexbox {
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  background: rgba(81, 142, 160, 0.3);
 }
-.splash .wrapper,
-.rules .wrapper {
+.splash .flexbox img,
+.rules .flexbox img {
+  max-width: 480px;
+  max-height: 360px;
+}
+.rules .flexbox {
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -webkit-flex-direction: column;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-justify-content: space-around;
+      -ms-flex-pack: distribute;
+          justify-content: space-around;
   background: rgba(81, 142, 160, 0.5);
-  text-align: center;
 }
-.rules .wrapper {
-  background: rgba(81, 142, 160, 0.9);
+.rules .flexbox img {
+  max-width: 480px;
+  max-height: 360px;
+}
+.rules .btn {
+  font-size: 1.750em;
+  position: absolute;
+  text-align: center;
+  width: 150px;
+  bottom: 5px;
+  right: 5px;
 }
 .about {
-  font-size: 22px;
+  overflow-y: auto;
+  font-size: 1.375em;
 }
-.about .wrapper {
-  background: rgba(81, 142, 160, 0.85);
+.about .flexbox {
+  overflow: auto;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -webkit-flex-direction: column;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-justify-content: space-around;
+      -ms-flex-pack: distribute;
+          justify-content: space-around;
+  background: rgba(255, 255, 255, 0.4);
   text-align: center;
 }
 .about h3 {
   -webkit-text-stroke: 1px #7B0A41;
   color: #F2F2F2;
 }
+.about ul {
+  list-style: none;
+}
 .about p {
   text-align: center;
   margin: 10px auto;
   width: 70%;
 }
+.about .btn {
+  font-size: 1.2em;
+  position: absolute;
+  text-align: center;
+  width: 150px;
+  bottom: 5px;
+  right: 5px;
+}
+.menu .flexbox {
+  background: rgba(81, 142, 160, 0.3);
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+}
 .menu ul {
   list-style: none;
   text-align: center;
 }
-footer {
-  position: fixed;
-  z-index: 999;
-  bottom: 30px;
-  width: 100vw;
-}
-footer .btn {
-  font-size: 28px;
-  display: block;
+.gab.btn {
+  border-radius: 100%;
   text-align: center;
-  margin: 0 auto;
+  font-size: 4.000em;
+  padding: 25px;
+  height: 120px;
+  width: 120px;
 }
-.game header {
-  text-align: center;
-  position: fixed;
+.gameplay.flexbox {
+  background: rgba(81, 142, 160, 0.2);
+  padding: 0px 20px;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+  -webkit-flex-direction: row;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  -webkit-box-pack: justify;
+  -webkit-justify-content: space-between;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+}
+.gameplay.flexbox .sub-flexbox {
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -webkit-flex-direction: column;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-justify-content: space-around;
+      -ms-flex-pack: distribute;
+          justify-content: space-around;
+}
+.gameplay.flexbox .sub-flexbox .title {
+  -webkit-text-stroke: 1px #7B0A41;
+  position: absolute;
+  font-size: 2.000em;
+  color: #F2F2F2;
+  top: 0px;
+}
+.gameplay.flexbox .sub-flexbox.left,
+.gameplay.flexbox .sub-flexbox.right {
+  padding: 50px 0px;
+}
+.gameplay.flexbox .sub-flexbox.left .title {
+  left: 10px;
+}
+.gameplay.flexbox .sub-flexbox.right .gab {
+  -webkit-transform: scale(-1, 1);
+      -ms-transform: scale(-1, 1);
+          transform: scale(-1, 1);
+}
+.gameplay.flexbox .sub-flexbox.right .title {
+  right: 10px;
+}
+.gameplay.flexbox .sub-flexbox.center {
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+}
+.gameplay.flexbox .sub-flexbox.center .scoreboard {
+  position: absolute;
+  z-index: 9999;
   width: 100%;
   left: 0;
   top: 0;
 }
-.game header .player-title,
-.game header .computer-title {
-  -webkit-text-stroke: 1px #7B0A41;
-  position: absolute;
-  font-size: 32px;
-  display: inline;
-  color: #F2F2F2;
-  top: 10px;
-}
-.game header .player-title {
-  left: 30px;
-}
-.game header .computer-title {
-  right: 30px;
-}
-.game header .scorebox {
+.gameplay.flexbox .sub-flexbox.center .scoreboard .scorebox {
   box-shadow: 0px 5px 0px #B71841, 0px 7px 2px 2px rgba(0, 0, 0, 0.3);
-  background: #ec4b74;
-  padding: 5px 10px;
-  margin: 0px auto;
-  width: 480px;
+  text-align: center;
+  background: #EC4B74;
+  max-width: 320px;
+  margin: 0 auto;
 }
-.game header .scorebox h1,
-.game header .scorebox span {
+.gameplay.flexbox .sub-flexbox.center .scoreboard .scorebox h1,
+.gameplay.flexbox .sub-flexbox.center .scoreboard .scorebox span {
   -webkit-text-stroke: 1px #7B0A41;
-  font-size: 38px;
+  font-size: 2.375em;
   display: inline;
   color: #F2F2F2;
 }
-.game header .scorebox .gap {
+.gameplay.flexbox .sub-flexbox.center .scoreboard .scorebox .gap {
   padding: 0px 10px;
 }
-.game main {
-  padding: 0px 50px;
-}
-.game main .player,
-.game main .computer,
-.game main .center {
-  position: absolute;
-  text-align: center;
-  display: table;
-  height: 100vh;
-}
-.game main .player ul,
-.game main .computer ul,
-.game main .center ul {
-  display: table-cell;
-  vertical-align: middle;
-}
-.game main .player ul li,
-.game main .computer ul li,
-.game main .center ul li {
-  display: block;
-  width: 120px;
-  height: 120px;
-  text-align: center;
-  border-radius: 100%;
-  padding: 20px;
-  margin: 30px auto;
-}
-.game main .player ul li i,
-.game main .computer ul li i,
-.game main .center ul li i {
-  font-size: 64px;
-  padding: 5px;
-  display: inline-block;
-}
-.game main .player {
-  left: 30px;
-  top: 0;
-}
-.game main .computer {
-  right: 30px;
-  top: 0;
-}
-.game main .computer i {
-  transform: scale(-1, 1);
-}
-.game main .center {
-  top: 0;
-  left: 0;
-  width: 100%;
-  z-index: -1;
-}
-.game main .center ul li {
-  margin: 0px 10px;
-  display: none;
-  -webkit-animation-duration: 1s;
-  animation-duration: 1s;
-  -webkit-animation-fill-mode: both;
-  animation-fill-mode: both;
-}
-.game main .center ul li:last-child i {
-  transform: scale(-1, 1);
-}
-.game main .center .win-msg {
+.gameplay.flexbox .sub-flexbox.center .scoreboard .win-msg {
   text-shadow: 0px 1px 0px #FFFFFF;
   -webkit-text-stroke: 1px #000;
-  position: absolute;
   text-align: center;
-  font-size: 38px;
+  padding-top: 20px;
+  position: absolute;
+  font-size: 2.313em;
   display: none;
   color: white;
-  width: 100%;
   -webkit-animation-duration: 1s;
   animation-duration: 1s;
   -webkit-animation-fill-mode: both;
   animation-fill-mode: both;
-  top: 30vh;
+  width: 100%;
+  left: 0px;
 }
-.game .hidden-overlay {
+.gameplay.flexbox .sub-flexbox.center .warzone .gab {
+  -webkit-animation-duration: 1s;
+  animation-duration: 1s;
+  -webkit-animation-fill-mode: both;
+  animation-fill-mode: both;
+  display: none;
+  margin: 0px 10px;
+}
+.gameplay.flexbox .sub-flexbox.center .warzone .computer-choice i {
+  display: inline-block;
+  -webkit-transform: scale(-1, 1);
+      -ms-transform: scale(-1, 1);
+          transform: scale(-1, 1);
+}
+.gameplay.flexbox .sub-flexbox.center .back-to-menu-btn {
+  position: absolute;
+  width: 100%;
+  bottom: 0px;
+  left: 0;
+}
+.gameplay.flexbox .sub-flexbox.center .back-to-menu-btn .btn {
+  display: block;
+  text-align: center;
+  font-size: 1.750em;
+  margin: 0 auto;
+  margin-bottom: 20px;
+}
+.gameplay.flexbox .hidden-overlay {
   background: transparent;
   position: absolute;
-  z-index: 10000;
+  z-index: 1001;
   display: none;
   height: 100vh;
   width: 100vw;
   left: 0;
   top: 0;
 }
-.game .gameover-overlay {
-  background: rgba(0, 0, 0, 0.5);
-  vertical-align: middle;
-  display: table-cell;
-  position: relative;
-  z-index: 10000;
+.gameplay.flexbox .gameover-overlay {
+  background: rgba(0, 0, 0, 0.75);
+  position: absolute;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
   display: none;
+  z-index: 1000;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+      -ms-flex-pack: center;
+          justify-content: center;
   height: 100vh;
   width: 100vw;
   -webkit-animation-duration: 1s;
@@ -3515,36 +3607,28 @@ footer .btn {
   left: 0;
   top: 0;
 }
-.game .gameover-overlay .gameover-dialog {
+.gameplay.flexbox .gameover-overlay .gameover-dialog {
   background: rgba(81, 142, 160, 0.75);
   border-radius: 15px;
-  position: relative;
   text-align: center;
-  margin: 0 auto;
   padding: 20px;
-  height: 35vh;
+  width: 400px;
   -webkit-animation-duration: 1s;
   animation-duration: 1s;
   -webkit-animation-fill-mode: both;
   animation-fill-mode: both;
-  width: 40vw;
 }
-.game .gameover-overlay .gameover-dialog .gameover-buttons {
-  position: absolute;
-  bottom: 30px;
-  width: 100%;
-  left: 0;
-}
-.game .gameover-overlay .gameover-dialog .gameover-buttons .btn {
-  width: 150px;
-  font-size: 32px;
-  margin: 0px 5px;
-}
-.game .gameover-overlay .gameover-dialog .gameover-msg {
+.gameplay.flexbox .gameover-overlay .gameover-dialog .gameover-msg {
   text-shadow: 0px 1px 0px #FFFFFF;
   -webkit-text-stroke: 1px #000;
-  font-size: 34px;
+  font-size: 2.000em;
   color: white;
+}
+.gameplay.flexbox .gameover-overlay .gameover-dialog .btn {
+  margin: 20px 5px;
+  margin-bottom: 10px;
+  font-size: 1.750em;
+  width: 130px;
 }
 .btn {
   text-shadow: 0px 1px 0px #FFFFFF;
@@ -3552,7 +3636,7 @@ footer .btn {
   border-radius: 15px;
   padding: 5px 0px;
   margin: 15px 0px;
-  font-size: 42px;
+  font-size: 2.625em;
   width: 200px;
 }
 .btn.yellow {
@@ -3596,4 +3680,51 @@ footer .btn {
   -webkit-animation-name: tada;
   animation-name: tada;
   box-shadow: 0px -5px 0px #FFFF26, 0px -7px 0px #FFFFFF, 0px 10px 0px #256580;
+}
+@media only screen and (max-width: 848px) {
+  body {
+    font-size: 14px;
+  }
+  .btn.gab {
+    font-size: 3.0em;
+    padding: 10px;
+    height: 70px;
+    width: 70px;
+  }
+  .flexbox.gameplay .back-to-menu-btn .btn {
+    width: 120px;
+  }
+}
+@media only screen and (max-width: 720px) {
+  body {
+    font-size: 12px;
+  }
+  .btn.gab {
+    font-size: 3.0em;
+    padding: 10px;
+    height: 60px;
+    width: 60px;
+  }
+}
+@media only screen and (max-width: 600px) {
+  .btn.gab {
+    font-size: 2.0em;
+    padding: 8px;
+    height: 50px;
+    width: 50px;
+  }
+}
+@media only screen and (min-width: 1400px) {
+  body {
+    font-size: 24px;
+  }
+  .btn.gab {
+    font-size: 4.0em;
+    padding: 50px;
+    height: 200px;
+    width: 200px;
+  }
+  .flexbox.gameplay .back-to-menu-btn .btn {
+    width: 200px;
+  }
 }

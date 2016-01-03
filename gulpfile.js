@@ -20,7 +20,9 @@ var browserSync  = require('browser-sync').create();
 gulp.task('less', function() {
 	gulp.src('./app/css/*.less')
 		.pipe(plumber())
-		.pipe(less())
+		.pipe(less({
+    		plugins: [autoprefix]
+ 		}))
 		.pipe(gulp.dest('./app/css'));
 });
 // Compile ES6 Files
@@ -111,7 +113,8 @@ gulp.task('copy-img', function() {
 gulp.task('copy-root', function() {
 	return gulp.src([
 		'./app/index.html',
-		'./app/favicon.ico'
+		'./app/favicon.ico',
+		'./app/manifest.json',
 		])
    		.pipe(gulp.dest('./dist'));
 });

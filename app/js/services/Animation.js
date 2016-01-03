@@ -53,6 +53,7 @@ export let Animation = {
 	computerMoveAnimation: function(move) {
 		Elem.computerChoiceEl.firstChild.classList.add(`icon-${move}`);
 		Elem.computerChoiceEl.classList.add(this.btnColor[move]);
+		Elem.computerChoiceEl.classList.add('reflect');
 		Elem.computerChoiceEl.classList.add('bounceInRight');
 		Elem.computerChoiceEl.style.display = 'inline-block';
 		setTimeout(()=>{
@@ -65,9 +66,8 @@ export let Animation = {
 	gameoverAnimation: function(msg) {
 		Elem.gameoverMsg.innerHTML = msg;
 		Elem.gameoverOverlay.classList.add('fadeIn');
-		Elem.gameoverOverlay.style.display = 'table-cell';
+		Elem.gameoverOverlay.style.display = 'flex';
 		Elem.gameoverDialog.classList.add('zoomIn');
-		Elem.gameoverDialog.style.display = 'block';
 	},
 
 	playAgainAnimation: function() {
@@ -77,7 +77,6 @@ export let Animation = {
 		setTimeout(()=> {
 			Elem.gameoverDialog.classList.remove('zoomOut');
 			Elem.gameoverOverlay.classList.remove('fadeOut');
-			Elem.gameoverDialog.style.display = 'none';
 			Elem.gameoverOverlay.style.display = 'none';
 		}, 500);
 	}

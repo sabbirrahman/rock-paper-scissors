@@ -1,8 +1,10 @@
-import {GameLogic}  from './Services/GameLogic';
-import {Animation}  from './Services/Animation';
-import {Routes}  	from './Routes';
+import {GameLogic} from './Services/GameLogic';
+import {Animation} from './Services/Animation';
+import {Routes}    from './Routes';
+import FastClick   from 'fastclick';
 
-let actionButtons   = document.querySelectorAll('.player .gamebuttons li');
+FastClick(document.body);
+let actionButtons   = document.querySelectorAll('.sub-flexbox.left .gab');
 
 [].forEach.call(actionButtons, actionButton => {
 	actionButton.addEventListener('click', (e) => {
@@ -37,4 +39,5 @@ var playAgainButton = document.getElementsByClassName('play-again')[0];
 playAgainButton.addEventListener('click', (e) => {
 	GameLogic.resetGame();
 	Animation.playAgainAnimation();
+	e.preventDefault();
 });

@@ -2,7 +2,7 @@ import Route 	   from 'page.js';
 import {Elem}      from './Services/Elements';
 import {GameLogic} from './Services/GameLogic';
 
-let baseUrl = "/";
+let baseURL = '';
 
 let loadView = function(view) {
 	let viewId = view.path ? view.path.substring(1, view.path.length) : view;
@@ -15,18 +15,20 @@ let loadView = function(view) {
 	return false;
 }
 
-Route(baseUrl, () => {
+Route(baseURL, () => {
 	loadView('splash');
-	setTimeout(() => Route(`${baseUrl}menu`), 2000);
+	setTimeout(() => Route(`${baseURL}/menu`), 2000);
 });
-Route(`${baseUrl}menu`,  function() { loadView('menu');  });
-Route(`${baseUrl}rules`, function() { loadView('rules'); });
-Route(`${baseUrl}about`, function() { loadView('about'); });
-Route(`${baseUrl}game`, () => {	
-	Elem.gameoverDialog.style.display = 'none';
+Route(`${baseURL}/menu`,  function() { loadView('menu');  });
+Route(`${baseURL}/rules`, function() { loadView('rules'); });
+Route(`${baseURL}/about`, function() { loadView('about'); });
+Route(`${baseURL}/game`, () => {	
 	Elem.gameoverOverlay.style.display = 'none';
 	GameLogic.resetGame();
 	loadView('game');
 });
 
-Route();
+Route({
+	hashbang: true
+});
+Route(`${baseURL}`);
